@@ -1089,16 +1089,27 @@ function initLeftDropdownMenu() {
 
   function openDropdown() {
     dropdownWrap.classList.add("is-open");
-    if (backdrop) backdrop.classList.add("is-active");
+    if (backdrop) {
+      backdrop.classList.add("is-active");
+      backdrop.setAttribute("aria-hidden", "false");
+    }
     dropdownBtn.setAttribute("aria-expanded", "true");
-    setTimeout(() => {
-      if (searchInput) searchInput.focus();
-    }, 150);
+    
+    // Auto-focus search input on desktop only (avoid keyboard popup on touch / mobile devices)
+    const isMobileOrTouch = window.innerWidth <= 768 || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    if (!isMobileOrTouch && searchInput) {
+      setTimeout(() => {
+        searchInput.focus();
+      }, 150);
+    }
   }
 
   function closeDropdown() {
     dropdownWrap.classList.remove("is-open");
-    if (backdrop) backdrop.classList.remove("is-active");
+    if (backdrop) {
+      backdrop.classList.remove("is-active");
+      backdrop.setAttribute("aria-hidden", "true");
+    }
     dropdownBtn.setAttribute("aria-expanded", "false");
     if (searchInput) {
       searchInput.value = "";
@@ -1115,19 +1126,25 @@ function initLeftDropdownMenu() {
   }
 
   dropdownBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     e.stopPropagation();
     toggleDropdown();
   });
 
   if (closeBtn) {
     closeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
       e.stopPropagation();
       closeDropdown();
     });
   }
 
   if (backdrop) {
-    backdrop.addEventListener("click", closeDropdown);
+    backdrop.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeDropdown();
+    });
   }
 
   // Close on outside click
