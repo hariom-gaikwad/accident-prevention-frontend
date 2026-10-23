@@ -2505,14 +2505,18 @@ body.dark-theme .quiz-opt-btn:hover:not(:disabled) { background: rgba(29,78,216,
    MODALS & POPUPS
    ========================================================= */
 .safety-modal-backdrop {
+  display: none;
   position: fixed; inset: 0;
-  background: rgba(6,13,26,0.8);
+  background: rgba(6, 13, 26, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  z-index: 2000;
-  display: flex; align-items: center; justify-content: center;
+  z-index: 99999;
+  align-items: center; justify-content: center;
   padding: 1.25rem;
   animation: fadeSlideUp 0.2s ease-out;
+}
+.safety-modal-backdrop.active {
+  display: flex !important;
 }
 
 .safety-modal-card {
@@ -2901,6 +2905,7 @@ body.dark-theme .sos-action-tile:hover { background: rgba(225,29,72,0.1); }
   }
 
   /* 5. Touch Friendly Modal Dialogs */
+  .safety-modal-backdrop.active,
   .safety-modal-overlay.active {
     display: flex !important;
     align-items: flex-end !important;
@@ -3038,7 +3043,7 @@ body.dark-theme .sos-action-tile:hover { background: rgba(225,29,72,0.1); }
 
 .portal-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 1.5rem;
   margin-top: 2.5rem;
 }
@@ -3527,5 +3532,203 @@ body.dark-theme .sos-action-tile:hover { background: rgba(225,29,72,0.1); }
   }
   .rules-filter-select-wrap {
     min-width: 100%;
+  }
+}
+
+/* ==========================================================================
+   2026 MOBILE COMPACT & POLISH ENHANCEMENTS
+   ========================================================================== */
+.rule-card-top-left {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.mobile-sos-btn.active {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.45) !important;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .mobile-bottom-sos-bar {
+    padding-bottom: calc(0.45rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Left Dropdown on mobile/tablet */
+  .left-dropdown-panel {
+    position: fixed !important;
+    top: 60px !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
+    max-width: none !important;
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+    max-height: calc(100vh - 135px) !important;
+    border-radius: 16px !important;
+  }
+
+  .dropdown-panel-body {
+    max-height: calc(100vh - 240px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+@media (max-width: 640px) {
+  /* 1-column portals on mobile */
+  .portal-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    margin-top: 1.25rem !important;
+  }
+
+  .portal-card {
+    padding: 1.25rem 1.1rem !important;
+  }
+
+  /* 2x2 Emergency Helplines */
+  .emergency-strip-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.6rem !important;
+  }
+
+  .quick-call-card {
+    padding: 0.65rem 0.75rem !important;
+    gap: 0.6rem !important;
+  }
+
+  .quick-call-card .call-icon {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 1rem !important;
+  }
+
+  .quick-call-card h5 {
+    font-size: 0.76rem !important;
+  }
+
+  .quick-call-card .tel-number {
+    font-size: 0.86rem !important;
+  }
+
+  /* Compact Hero Stats below banner on mobile */
+  .hero-floating-stat {
+    position: static !important;
+    transform: none !important;
+    margin-top: 1rem !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.5rem !important;
+    padding: 0.85rem 0.5rem !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .stat-item .stat-num {
+    font-size: 1.25rem !important;
+    font-weight: 800;
+  }
+
+  .stat-item .stat-label {
+    font-size: 0.68rem !important;
+  }
+
+  /* Responsive View Header Strips */
+  .view-header-strip {
+    flex-wrap: wrap !important;
+    gap: 0.65rem !important;
+    margin-bottom: 1.25rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  .btn-back-home {
+    padding: 0.45rem 0.95rem !important;
+    font-size: 0.82rem !important;
+  }
+
+  .view-indicator-pill {
+    font-size: 0.75rem !important;
+    padding: 0.28rem 0.65rem !important;
+  }
+
+  /* Road Rules Directory Mobile Controls */
+  .rules-control-card {
+    padding: 1rem 0.85rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .rules-cat-pill {
+    padding: 0.45rem 0.85rem !important;
+    min-height: 38px !important;
+  }
+
+  .rules-status-bar {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.4rem !important;
+  }
+
+  .rule-touch-card {
+    padding: 0.95rem !important;
+  }
+
+  /* Speed Lab Sliders */
+  .stopping-metrics-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Map container height */
+  .map-canvas-container {
+    min-height: 340px !important;
+    height: 350px !important;
+  }
+
+  #nashikMap {
+    min-height: 340px !important;
+    height: 350px !important;
+  }
+
+  .map-sidebar-list {
+    max-height: 250px !important;
+  }
+
+  /* Pilgrim ID Card layout */
+  .card-band {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.35rem !important;
+  }
+
+  .id-serial {
+    font-size: 0.78rem !important;
+    padding: 2px 7px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .brand-text span {
+    max-width: 160px !important;
+    font-size: 0.62rem !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .brand-text span {
+    max-width: 120px !important;
+  }
+
+  .emergency-strip-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .portal-card {
+    padding: 1rem 0.85rem !important;
   }
 }

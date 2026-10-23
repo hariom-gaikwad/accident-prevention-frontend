@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Safe Nashik Portal - Application Engine
  * Core interactivity: i18n, SOS Siren, Hazard Reporting, Certificate Canvas,
  * Speed Calculator, Safety Quiz, ID Card Generator & LocalStorage Persistence.
@@ -143,25 +143,49 @@ function initSOSFeatures() {
   const sosModal = document.getElementById("sosModal");
   const closeSosBtn = document.getElementById("closeSosModalBtn");
 
-  if (sosModalBtn && sosModal) {
-    sosModalBtn.addEventListener("click", () => {
-      sosModal.classList.add("active");
-    });
+  function openSosModal() {
+    if (!sosModal) return;
+    sosModal.style.display = "flex";
+    sosModal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeSosModal() {
+    if (!sosModal) return;
+    sosModal.style.display = "none";
+    sosModal.classList.remove("active");
+    document.body.style.overflow = "";
+    stopEmergencySiren();
+  }
+
+  if (sosModalBtn) {
+    sosModalBtn.addEventListener("click", openSosModal);
   }
 
   const mobileSosModalBtn = document.getElementById("btnMobileSosModal");
-  if (mobileSosModalBtn && sosModal) {
-    mobileSosModalBtn.addEventListener("click", () => {
-      sosModal.classList.add("active");
+  if (mobileSosModalBtn) {
+    mobileSosModalBtn.addEventListener("click", openSosModal);
+  }
+
+  if (closeSosBtn) {
+    closeSosBtn.addEventListener("click", closeSosModal);
+  }
+
+  // Dismiss on clicking backdrop outside card
+  if (sosModal) {
+    sosModal.addEventListener("click", (e) => {
+      if (e.target === sosModal) {
+        closeSosModal();
+      }
     });
   }
 
-  if (closeSosBtn && sosModal) {
-    closeSosBtn.addEventListener("click", () => {
-      sosModal.classList.remove("active");
-      stopEmergencySiren();
-    });
-  }
+  // Dismiss on Escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && sosModal && sosModal.classList.contains("active")) {
+      closeSosModal();
+    }
+  });
 
   if (sirenBtn) {
     sirenBtn.addEventListener("click", toggleEmergencySiren);
@@ -1242,6 +1266,7 @@ function switchAppView(viewName) {
     'speedCalculator': 'speed',
     'speed': 'speed',
     'rules': 'rules',
+    'roadRulesSection': 'rules',
     'allRoadRulesSection': 'rules',
     'hazardReporting': 'hazard',
     'hazard': 'hazard',
@@ -1278,13 +1303,37 @@ function switchAppView(viewName) {
     }
   });
 
-  // If map view, recompute Leaflet size
+  // If map view, recompute Leaflet size with multiple timeouts for smooth mobile render
   if (target === 'map') {
+    [100, 250, 500].forEach(delay => {
+      setTimeout(() => {
+        if (typeof mapInstance !== 'undefined' && mapInstance) {
+          mapInstance.invalidateSize();
+        }
+      }, delay);
+    });
+  }
+
+  // If speed calculator view, scroll directly to speed lab card
+  if (target === 'speed') {
     setTimeout(() => {
-      if (typeof mapInstance !== 'undefined' && mapInstance) {
-        mapInstance.invalidateSize();
+      const speedCard = document.getElementById('speedCalculator');
+      if (speedCard) {
+        speedCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-    }, 250);
+    }, 200);
+  }
+
+  // Sync mobile bottom action bar active states
+  const mobileMapBtn = document.querySelector('.mobile-bottom-sos-bar .btn-map');
+  const mobileHazardBtn = document.querySelector('.mobile-bottom-sos-bar .btn-hazard');
+  if (mobileMapBtn) {
+    if (target === 'map') mobileMapBtn.classList.add('active');
+    else mobileMapBtn.classList.remove('active');
+  }
+  if (mobileHazardBtn) {
+    if (target === 'hazard') mobileHazardBtn.classList.add('active');
+    else mobileHazardBtn.classList.remove('active');
   }
 
   // Smooth scroll to top
@@ -1310,17 +1359,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const initialHash = window.location.hash.replace('#', '');
   switchAppView(initialHash || 'home');
 
-  // Intercept dropdown items to switch views cleanly
-  document.querySelectorAll('.dropdown-item[href^="#"]').forEach(link => {
-    link.addEventListener('click', (e) => {
-      const targetHash = link.getAttribute('href').replace('#', '');
-      if (targetHash) {
-        e.preventDefault();
-        switchAppView(targetHash);
-        const closeBtn = document.getElementById('leftDropdownCloseBtn');
-        if (closeBtn) closeBtn.click();
-      }
-    });
+  // Intercept all in-page hash links (hero, dropdown, footer) for seamless SPA routing
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a[href^="#"]');
+    if (!anchor) return;
+    const href = anchor.getAttribute('href');
+    if (!href || href === '#' || href.length < 2) return;
+    
+    const targetHash = href.replace('#', '');
+    e.preventDefault();
+    switchAppView(targetHash);
+
+    // If inside left dropdown menu, close it
+    const dropdownWrap = document.getElementById('leftDropdownWrap');
+    if (dropdownWrap && dropdownWrap.classList.contains('is-open')) {
+      const closeBtn = document.getElementById('leftDropdownCloseBtn');
+      if (closeBtn) closeBtn.click();
+    }
   });
 
   // Intercept mobile bottom bar map & report buttons

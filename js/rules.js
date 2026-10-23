@@ -165,8 +165,10 @@ function renderRoadRules() {
     return `
       <div class="rule-touch-card">
         <div class="rule-card-top">
-          <span class="rule-card-num">#${rule.sr}</span>
-          <span class="rule-sec-badge">${escapeHtml(rule.section)}</span>
+          <div class="rule-card-top-left">
+            <span class="rule-card-num">#${rule.sr}</span>
+            <span class="rule-sec-badge">${escapeHtml(rule.section)}</span>
+          </div>
           <span class="rule-fine-pill ${finePillClass}">
             ${isCourt ? '<i class="fas fa-gavel"></i> ' : '₹ '}${escapeHtml(rule.fine)}
           </span>

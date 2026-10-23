@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -119,7 +119,7 @@
                       <span class="dropdown-item-desc">Road rules, Godavari Ghats, Fire & Monsoon</span>
                     </div>
                   </a>
-                  <a href="#roadRulesSection" class="dropdown-item" data-filter="road rules traffic regulations fines penalties new mv act amendments speed limits signals minor drunk driving helmet seatbelt 2024 2025 2026">
+                  <a href="#rules" class="dropdown-item" data-filter="road rules traffic regulations fines penalties new mv act amendments speed limits signals minor drunk driving helmet seatbelt 2024 2025 2026">
                     <span class="dropdown-item-icon bg-amber"><i class="fas fa-traffic-light"></i></span>
                     <div class="dropdown-item-info">
                       <span class="dropdown-item-title">All Road Rules & Penalties</span>
@@ -532,9 +532,9 @@
     <!-- ======================================================================
          Core Accident Prevention Topics (7 Critical Domains)
          ====================================================================== -->
-    <section class="section-wrapper" id="safetyTopics" data-view-section="guides">
+    <section class="section-wrapper" id="safetyTopics" data-view-section="guides speed">
       <div class="container">
-        <div class="view-header-strip"><button type="button" class="btn-back-home" onclick="switchAppView('home')"><i class="fas fa-arrow-left"></i> <span>Back to Home Overview</span></button><span class="view-indicator-pill"><i class="fas fa-layer-group"></i> Active Module Details</span></div>
+        <div class="view-header-strip"><button type="button" class="btn-back-home" onclick="switchAppView('home')"><i class="fas fa-arrow-left"></i> <span>Back to Home</span></button><span class="view-indicator-pill"><i class="fas fa-shield-halved"></i> Safety Guides &amp; Manuals</span></div>
         <div class="section-head">
           <span class="section-tag" data-i18n="topicsHeading">Accident Prevention Domains</span>
           <h2 class="section-title">Life-Saving Knowledge for Every Nashikkar</h2>
@@ -1149,7 +1149,7 @@
          ====================================================================== -->
     <section class="section-wrapper" id="hazardReporting" data-view-section="hazard">
       <div class="container">
-        <div class="view-header-strip"><button type="button" class="btn-back-home" onclick="switchAppView('home')"><i class="fas fa-arrow-left"></i> <span>Back to Home Overview</span></button><span class="view-indicator-pill"><i class="fas fa-layer-group"></i> Active Module Details</span></div>
+        <div class="view-header-strip"><button type="button" class="btn-back-home" onclick="switchAppView('home')"><i class="fas fa-arrow-left"></i> <span>Back to Home</span></button><span class="view-indicator-pill"><i class="fas fa-camera"></i> Report Road Hazards &amp; Grievances</span></div>
         <div class="section-head">
           <span class="section-tag" data-i18n="hazardHeading">Report a Public Hazard in Nashik</span>
           <h2 class="section-title">Empowering Citizens to Prevent Accidents</h2>
@@ -1234,7 +1234,7 @@
          ====================================================================== -->
     <section class="kumbh-special-section" id="kumbhSpecial" data-view-section="kumbh">
       <div class="container">
-        <div class="view-header-strip"><button type="button" class="btn-back-home" onclick="switchAppView('home')"><i class="fas fa-arrow-left"></i> <span>Back to Home Overview</span></button><span class="view-indicator-pill"><i class="fas fa-layer-group"></i> Active Module Details</span></div>
+        <div class="view-header-strip"><button type="button" class="btn-back-home" onclick="switchAppView('home')"><i class="fas fa-arrow-left"></i> <span>Back to Home</span></button><span class="view-indicator-pill"><i class="fas fa-om"></i> Kumbh Mela 2027 Safety Hub</span></div>
         <div class="section-head">
           <span class="section-tag" style="background:#fef3c7; color:#b45309;" data-i18n="kumbhHeading">Kumbh Mela 2027 Special Safety Module</span>
           <h2 class="section-title">Pilgrim Crowd Management & Snan Safety</h2>
@@ -1411,7 +1411,7 @@
          ====================================================================== -->
     <section class="section-wrapper" id="safetyQuiz" data-view-section="quiz">
       <div class="container">
-        <div class="view-header-strip"><button type="button" class="btn-back-home" onclick="switchAppView('home')"><i class="fas fa-arrow-left"></i> <span>Back to Home Overview</span></button><span class="view-indicator-pill"><i class="fas fa-layer-group"></i> Active Module Details</span></div>
+        <div class="view-header-strip"><button type="button" class="btn-back-home" onclick="switchAppView('home')"><i class="fas fa-arrow-left"></i> <span>Back to Home</span></button><span class="view-indicator-pill"><i class="fas fa-award"></i> Safety Challenge &amp; Certificate</span></div>
         <div class="section-head">
           <span class="section-tag" data-i18n="quizHeading">Community Safety Challenge & Official Certificate</span>
           <h2 class="section-title">Test Your Emergency Preparedness</h2>
@@ -1484,7 +1484,7 @@
          ====================================================================== -->
     <section class="section-wrapper" id="communityPledge" style="padding-top:0;" data-view-section="pledge">
       <div class="container">
-        <div class="view-header-strip"><button type="button" class="btn-back-home" onclick="switchAppView('home')"><i class="fas fa-arrow-left"></i> <span>Back to Home Overview</span></button><span class="view-indicator-pill"><i class="fas fa-layer-group"></i> Active Module Details</span></div>
+        <div class="view-header-strip"><button type="button" class="btn-back-home" onclick="switchAppView('home')"><i class="fas fa-arrow-left"></i> <span>Back to Home</span></button><span class="view-indicator-pill"><i class="fas fa-hand-holding-heart"></i> Citizen Pledge &amp; Safety ID</span></div>
         <div class="pledge-banner-box">
           <span class="badge badge-warning" style="font-size:0.85rem;"><i class="fas fa-heart"></i> CITIZEN EMPOWERMENT</span>
           <h2 style="font-size:2.2rem; margin-top:0.5rem;" data-i18n="pledgeHeading">Take the Nashik Community Safety Pledge</h2>
@@ -1610,13 +1610,13 @@
   <!-- ========================================================================
        SOS Emergency Modal & Alarm Synthesizer
        ======================================================================== -->
-  <div class="safety-modal-backdrop" id="sosModal" style="display:none;">
+  <div class="safety-modal-backdrop" id="sosModal" role="dialog" aria-modal="true" aria-labelledby="sosModalTitle">
     <div class="safety-modal-card animate-scale-up" onclick="event.stopPropagation()">
       <div class="modal-header">
         <span class="popup-badge badge-danger"><i class="fas fa-triangle-exclamation"></i> EMERGENCY RESPONSE HUB</span>
-        <button type="button" class="modal-close-btn" id="closeSosModalBtn">&times;</button>
+        <button type="button" class="modal-close-btn" id="closeSosModalBtn" aria-label="Close Emergency Modal">&times;</button>
       </div>
-      <h3 class="modal-title text-danger">Immediate Emergency Assistance</h3>
+      <h3 class="modal-title text-danger" id="sosModalTitle">Immediate Emergency Assistance</h3>
       <p class="modal-address">Tap any service below to connect instantly. All emergency lines operate 24x7.</p>
 
       <div class="sos-modal-grid">
