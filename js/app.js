@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Safe Nashik Portal - Application Engine
  * Core interactivity: i18n, SOS Siren, Hazard Reporting, Certificate Canvas,
  * Speed Calculator, Safety Quiz, ID Card Generator & LocalStorage Persistence.
@@ -1241,6 +1241,8 @@ function switchAppView(viewName) {
     'map': 'map',
     'speedCalculator': 'speed',
     'speed': 'speed',
+    'rules': 'rules',
+    'allRoadRulesSection': 'rules',
     'hazardReporting': 'hazard',
     'hazard': 'hazard',
     'kumbhSpecial': 'kumbh',
