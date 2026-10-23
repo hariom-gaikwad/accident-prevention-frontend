@@ -259,6 +259,31 @@
         </a>
       </div>
 
+      <!-- Module Navigation Bar -->
+      <nav class="nav-module-tabs" id="navModuleTabs" aria-label="Portal Navigation Tabs">
+        <button type="button" class="mod-tab-btn active" data-view="home" onclick="switchAppView('home')">
+          <i class="fas fa-house"></i> <span>Home</span>
+        </button>
+        <button type="button" class="mod-tab-btn" data-view="guides" onclick="switchAppView('guides')">
+          <i class="fas fa-shield-halved"></i> <span>Guides</span>
+        </button>
+        <button type="button" class="mod-tab-btn" data-view="map" onclick="switchAppView('map')">
+          <i class="fas fa-map-location-dot"></i> <span>Live Map</span>
+        </button>
+        <button type="button" class="mod-tab-btn" data-view="hazard" onclick="switchAppView('hazard')">
+          <i class="fas fa-triangle-exclamation"></i> <span>Report</span>
+        </button>
+        <button type="button" class="mod-tab-btn" data-view="kumbh" onclick="switchAppView('kumbh')">
+          <i class="fas fa-om"></i> <span>Kumbh 2027</span>
+        </button>
+        <button type="button" class="mod-tab-btn" data-view="quiz" onclick="switchAppView('quiz')">
+          <i class="fas fa-award"></i> <span>Quiz</span>
+        </button>
+        <button type="button" class="mod-tab-btn" data-view="pledge" onclick="switchAppView('pledge')">
+          <i class="fas fa-hand-holding-heart"></i> <span>Pledge</span>
+        </button>
+      </nav>
+
       <div class="nav-cta-group">
         <button type="button" class="btn-sos-dial" id="openSosModalBtn">
           <i class="fas fa-phone-volume"></i> <span>EMERGENCY SOS</span>
@@ -288,7 +313,7 @@
     <!-- ======================================================================
          Hero Section
          ====================================================================== -->
-    <section class="hero-section" id="home">
+    <section class="hero-section" id="home" data-view-section="home">
       <div class="container hero-grid">
         <div class="hero-content">
           <div class="hero-badge">
@@ -337,7 +362,7 @@
     <!-- ======================================================================
          Quick One-Tap Emergency Strip
          ====================================================================== -->
-    <section class="emergency-strip" aria-label="Emergency Helplines">
+    <section class="emergency-strip" aria-label="Emergency Helplines" data-view-section="home">
       <div class="container emergency-strip-grid">
         <a href="tel:108" class="quick-call-card" title="Free 24/7 Medical Ambulance">
           <div class="call-icon ambulance"><i class="fas fa-ambulance"></i></div>
@@ -378,6 +403,111 @@
             <span class="tel-number">0253-2576106</span>
           </div>
         </a>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Organized Portal Hub (Clean Dashboard Display on Home Screen)
+         ====================================================================== -->
+    <section class="section-wrapper home-portals-section" id="homePortalsHub" data-view-section="home">
+      <div class="container">
+        <div class="section-head text-center">
+          <span class="section-tag"><i class="fas fa-layer-group"></i> ORGANIZED CIVIC MODULES</span>
+          <h2 class="section-title">Explore Safety Portals & Civic Tools</h2>
+          <p class="section-subtitle">Select any dedicated safety portal below to access interactive guides, real-time maps, hazard reporting, or the Kumbh Mela hub.</p>
+        </div>
+
+        <div class="portal-cards-grid">
+          <!-- Card 1: Safety Guides -->
+          <div class="portal-card" onclick="switchAppView('guides')">
+            <div class="portal-card-header">
+              <div class="portal-card-icon bg-blue"><i class="fas fa-shield-halved"></i></div>
+              <span class="portal-badge">7 CRITICAL DOMAINS</span>
+            </div>
+            <div class="portal-card-body">
+              <h3>Accident Prevention Guides</h3>
+              <p>Actionable, life-saving rules for Nashik highways, Godavari ghat currents, home LPG leaks, fire defense, and CPR first aid.</p>
+            </div>
+            <div class="portal-card-footer">
+              <span class="portal-link-btn">Explore Guides <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Card 2: Interactive Safety Map -->
+          <div class="portal-card" onclick="switchAppView('map')">
+            <div class="portal-card-header">
+              <div class="portal-card-icon bg-red"><i class="fas fa-map-location-dot"></i></div>
+              <span class="portal-badge pill-danger">LIVE GIS MAP</span>
+            </div>
+            <div class="portal-card-body">
+              <h3>Nashik Safety Map & Blackspots</h3>
+              <p>Live coordinates of Dwarka Circle, Pathardi Phata, trauma care hospitals, police beats, and emergency river rescue booths.</p>
+            </div>
+            <div class="portal-card-footer">
+              <span class="portal-link-btn">Open Interactive Map <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Card 3: Report Hazard -->
+          <div class="portal-card" onclick="switchAppView('hazard')">
+            <div class="portal-card-header">
+              <div class="portal-card-icon bg-amber"><i class="fas fa-triangle-exclamation"></i></div>
+              <span class="portal-badge pill-warning">CIVIC ACTION</span>
+            </div>
+            <div class="portal-card-body">
+              <h3>Report a Road Hazard</h3>
+              <p>Spotted a dangerous pothole, broken ghat railing, or missing manhole? Submit GPS & photo report directly to civic dispatch.</p>
+            </div>
+            <div class="portal-card-footer">
+              <span class="portal-link-btn">Submit Report <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Card 4: Kumbh Mela 2027 -->
+          <div class="portal-card portal-card-kumbh" onclick="switchAppView('kumbh')">
+            <div class="portal-card-header">
+              <div class="portal-card-icon bg-saffron"><i class="fas fa-om"></i></div>
+              <span class="portal-badge pill-saffron">SIMHASTHA 2027</span>
+            </div>
+            <div class="portal-card-body">
+              <h3>Kumbh Mela 2027 Special Hub</h3>
+              <p>Dedicated crowd surge prevention, Ramkund holy bathing rules, child wristband desks, and lost-and-found help.</p>
+            </div>
+            <div class="portal-card-footer">
+              <span class="portal-link-btn">Open Kumbh Portal <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Card 5: Safety Quiz & Certificate -->
+          <div class="portal-card" onclick="switchAppView('quiz')">
+            <div class="portal-card-header">
+              <div class="portal-card-icon bg-purple"><i class="fas fa-award"></i></div>
+              <span class="portal-badge pill-purple">STUDENT CERTIFICATE</span>
+            </div>
+            <div class="portal-card-body">
+              <h3>Safety Quiz & Official Certificate</h3>
+              <p>Test your reflexes, score 60%+, and generate your downloadable, verifiable Nashik Civic Safety Certificate!</p>
+            </div>
+            <div class="portal-card-footer">
+              <span class="portal-link-btn">Take Challenge <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Card 6: Citizen Pledge & Volunteers -->
+          <div class="portal-card" onclick="switchAppView('pledge')">
+            <div class="portal-card-header">
+              <div class="portal-card-icon bg-emerald"><i class="fas fa-hand-holding-heart"></i></div>
+              <span class="portal-badge pill-success">COMMUNITY ACTION</span>
+            </div>
+            <div class="portal-card-body">
+              <h3>Safety Pledge & Volunteers</h3>
+              <p>Take the official Nashik Citizen Safety Pledge, download your digital Citizen Safety ID card, or sign up as a volunteer.</p>
+            </div>
+            <div class="portal-card-footer">
+              <span class="portal-link-btn">Take Pledge / Volunteer <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1329,7 +1459,7 @@
     <!-- ======================================================================
          Community Safety Pledge
          ====================================================================== -->
-    <section class="section-wrapper" id="communityPledge" style="padding-top:0;">
+    <section class="section-wrapper" id="communityPledge" style="padding-top:0;" data-view-section="pledge">
       <div class="container">
         <div class="pledge-banner-box">
           <span class="badge badge-warning" style="font-size:0.85rem;"><i class="fas fa-heart"></i> CITIZEN EMPOWERMENT</span>
@@ -1361,7 +1491,7 @@
     <!-- ======================================================================
          Awareness Campaign Gallery
          ====================================================================== -->
-    <section class="section-wrapper" id="campaignGallery">
+    <section class="section-wrapper" id="campaignGallery" data-view-section="pledge">
       <div class="container">
         <div class="section-head">
           <span class="section-tag">Community Action</span>
@@ -1401,7 +1531,7 @@
     <!-- ======================================================================
          Volunteer Registration Form
          ====================================================================== -->
-    <section class="section-wrapper" id="volunteerSection" style="background:var(--bg-card-subtle);">
+    <section class="section-wrapper" id="volunteerSection" style="background:var(--bg-card-subtle);" data-view-section="pledge">
       <div class="container">
         <div class="section-head">
           <span class="section-tag" data-i18n="volunteerHeading">Community Volunteers</span>

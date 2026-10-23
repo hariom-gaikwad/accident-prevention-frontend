@@ -2977,3 +2977,207 @@ body.dark-theme .sos-action-tile:hover { background: rgba(225,29,72,0.1); }
     font-size: 1.55rem !important;
   }
 }
+
+/* ==========================================================================
+   ORGANIZED SECTION VIEWS & PORTALS HUB (Anti-Clutter Architecture)
+   ========================================================================== */
+
+/* 1. Navbar Module Navigation Tabs */
+.nav-module-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(30, 41, 59, 0.6);
+  padding: 0.28rem 0.35rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mod-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  padding: 0.42rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.mod-tab-btn i {
+  font-size: 0.85rem;
+}
+
+.mod-tab-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mod-tab-btn.active {
+  color: #fff !important;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
+}
+
+@media (max-width: 1024px) {
+  .nav-module-tabs {
+    display: none; /* Accessible from Left Dropdown Menu and Mobile Bottom Bar on smaller screens */
+  }
+}
+
+/* 2. Organized Portal Cards Grid on Clean Home Dashboard */
+.home-portals-section {
+  padding: 3.5rem 0 4.5rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.4) 100%);
+}
+
+.portal-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.portal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.6rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.portal-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(37, 99, 235, 0.4);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(37, 99, 235, 0.15);
+}
+
+.portal-card-kumbh:hover {
+  border-color: rgba(245, 158, 11, 0.5) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(245, 158, 11, 0.2) !important;
+}
+
+.portal-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.portal-card-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+.portal-card-body h3 {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.6rem;
+}
+
+.portal-card-body p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+
+.portal-card-footer {
+  margin-top: auto;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.portal-link-btn {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #3b82f6;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: gap 0.15s ease;
+}
+
+.portal-card:hover .portal-link-btn {
+  gap: 0.75rem;
+  color: #60a5fa;
+}
+
+/* 3. Dedicated View Header Strip (Back to Home button) */
+.view-header-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.8rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn-back-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(30, 41, 59, 0.85);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.5rem 1.1rem;
+  border-radius: 50px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-back-home:hover {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+  transform: translateX(-3px);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
+}
+
+.view-indicator-pill {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.35rem 0.8rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* 4. Active View Animation */
+.active-view {
+  animation: viewFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes viewFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

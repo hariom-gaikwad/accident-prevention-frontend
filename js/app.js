@@ -1225,3 +1225,115 @@ window.toggleEmergencySiren = toggleEmergencySiren;
 window.removePhotoPreview = removePhotoPreview;
 window.initLeftDropdownMenu = initLeftDropdownMenu;
 window.initRoadRulesHub = initRoadRulesHub;
+
+// ============================================================================
+// ORGANIZED SPA VIEW CONTROLLER (Zero-Clutter Home & Dedicated Modules)
+// ============================================================================
+function switchAppView(viewName) {
+  if (!viewName) viewName = 'home';
+  viewName = viewName.replace('#', '').trim();
+
+  const aliasMap = {
+    'home': 'home',
+    'safetyTopics': 'guides',
+    'guides': 'guides',
+    'interactiveMap': 'map',
+    'map': 'map',
+    'speedCalculator': 'speed',
+    'speed': 'speed',
+    'hazardReporting': 'hazard',
+    'hazard': 'hazard',
+    'kumbhSpecial': 'kumbh',
+    'kumbh': 'kumbh',
+    'safetyQuiz': 'quiz',
+    'quiz': 'quiz',
+    'communityPledge': 'pledge',
+    'volunteerSection': 'pledge',
+    'campaignGallery': 'pledge',
+    'pledge': 'pledge'
+  };
+
+  const target = aliasMap[viewName] || 'home';
+
+  // Toggle sections
+  document.querySelectorAll('[data-view-section]').forEach(sec => {
+    const sectionViews = (sec.getAttribute('data-view-section') || '').split(' ');
+    if (sectionViews.includes(target)) {
+      sec.style.display = '';
+      sec.classList.add('active-view');
+    } else {
+      sec.style.display = 'none';
+      sec.classList.remove('active-view');
+    }
+  });
+
+  // Update navbar tab buttons
+  document.querySelectorAll('.mod-tab-btn').forEach(btn => {
+    if (btn.getAttribute('data-view') === target) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  // If map view, recompute Leaflet size
+  if (target === 'map') {
+    setTimeout(() => {
+      if (typeof mapInstance !== 'undefined' && mapInstance) {
+        mapInstance.invalidateSize();
+      }
+    }, 250);
+  }
+
+  // Smooth scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Update hash
+  if (history.pushState) {
+    history.pushState(null, null, target === 'home' ? window.location.pathname : '#' + target);
+  }
+}
+
+// Global expose
+window.switchAppView = switchAppView;
+
+// Hashchange & Initial Load Listeners
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) switchAppView(hash);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Check initial hash
+  const initialHash = window.location.hash.replace('#', '');
+  switchAppView(initialHash || 'home');
+
+  // Intercept dropdown items to switch views cleanly
+  document.querySelectorAll('.dropdown-item[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const targetHash = link.getAttribute('href').replace('#', '');
+      if (targetHash) {
+        e.preventDefault();
+        switchAppView(targetHash);
+        const closeBtn = document.getElementById('leftDropdownCloseBtn');
+        if (closeBtn) closeBtn.click();
+      }
+    });
+  });
+
+  // Intercept mobile bottom bar map & report buttons
+  const mobileMapBtn = document.querySelector('.mobile-bottom-sos-bar .btn-map');
+  if (mobileMapBtn) {
+    mobileMapBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchAppView('map');
+    });
+  }
+  const mobileHazardBtn = document.querySelector('.mobile-bottom-sos-bar .btn-hazard');
+  if (mobileHazardBtn) {
+    mobileHazardBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchAppView('hazard');
+    });
+  }
+});
