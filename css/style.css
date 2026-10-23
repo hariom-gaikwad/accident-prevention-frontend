@@ -2769,32 +2769,8 @@ body.dark-theme .sos-action-tile:hover { background: rgba(225,29,72,0.1); }
 
 /* 1. Mobile Sticky Bottom Quick Action Bar */
 .mobile-bottom-sos-bar {
-  display: none;
+  display: none !important;
 }
-
-@media (max-width: 768px) {
-  body {
-    padding-bottom: 76px !important;
-  }
-
-  .mobile-bottom-sos-bar {
-    display: flex !important;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
-    background: rgba(15, 23, 42, 0.94);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    padding: 0.45rem 0.5rem;
-    padding-bottom: calc(0.45rem + env(safe-area-inset-bottom, 0px));
-    box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.5);
-    align-items: center;
-    justify-content: space-around;
-    gap: 0.35rem;
-  }
 
   .mobile-sos-btn {
     flex: 1;
@@ -3553,11 +3529,11 @@ body.dark-theme .sos-action-tile:hover { background: rgba(225,29,72,0.1); }
 
 @media (max-width: 768px) {
   body {
-    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
+    
   }
 
   .mobile-bottom-sos-bar {
-    padding-bottom: calc(0.45rem + env(safe-area-inset-bottom, 0px)) !important;
+    display: none !important;
   }
 
   /* Left Dropdown on mobile/tablet */

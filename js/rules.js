@@ -1,5 +1,6 @@
 /**
- * Safe Nashik Portal - All Road Rules & Penalties Search Engine (234 Official MVA Offenses)
+ * Safe Nashik - All Road Rules & Traffic Penalties Engine (234 Rules)
+ * Search, filter, categorization and bilingual display engine.
  */
 
 let currentRulesCategory = 'all';
@@ -9,20 +10,28 @@ let currentRulesSearchQuery = '';
 function initRoadRulesEngine() {
   renderRoadRules();
 
-  // Search input listener
-  const searchInput = document.getElementById('rulesSearchInput');
+  // Search input listener (bind to rulesSearchInput or .rules-search-field)
+  const searchInput = document.getElementById('rulesSearchInput') || document.querySelector('.rules-search-field');
   if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      currentRulesSearchQuery = e.target.value.toLowerCase().trim();
+    const handleSearch = (e) => {
+      currentRulesSearchQuery = (e.target.value || '').toLowerCase().trim();
       renderRoadRules();
-    });
+    };
+
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('keyup', handleSearch);
+    searchInput.addEventListener('change', handleSearch);
   }
 
   // Clear search button
   const clearBtn = document.getElementById('rulesClearSearchBtn');
   if (clearBtn) {
     clearBtn.addEventListener('click', () => {
-      if (searchInput) searchInput.value = '';
+      const input = document.getElementById('rulesSearchInput') || document.querySelector('.rules-search-field');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
       currentRulesSearchQuery = '';
       renderRoadRules();
     });
@@ -79,17 +88,24 @@ function filterRulesData() {
       }
     }
 
-    // 3. Search Query
+    // 3. Multi-Term Search Query across all fields
     if (currentRulesSearchQuery) {
-      const q = currentRulesSearchQuery;
-      const srMatch = String(item.sr) === q;
-      const secMatch = (item.section || '').toLowerCase().includes(q);
-      const enMatch = (item.nameEn || '').toLowerCase().includes(q);
-      const mrMatch = (item.nameMr || '').toLowerCase().includes(q);
-      const fineMatch = (item.fine || '').toLowerCase().includes(q);
-      const repMatch = (item.repeatFine || '').toLowerCase().includes(q);
+      const q = currentRulesSearchQuery.trim().toLowerCase();
+      const terms = q.split(/\s+/).filter(Boolean);
+      
+      const combinedText = [
+        item.sr,
+        item.section || '',
+        item.nameEn || '',
+        item.nameMr || '',
+        item.fine || '',
+        item.repeatFine || '',
+        item.category || ''
+      ].join(' ').toLowerCase();
 
-      if (!srMatch && !secMatch && !enMatch && !mrMatch && !fineMatch && !repMatch) {
+      // Ensure every typed term appears in the offense record
+      const allTermsFound = terms.every(term => combinedText.includes(term));
+      if (!allTermsFound) {
         return false;
       }
     }
@@ -116,7 +132,7 @@ function renderRoadRules() {
       <div class="rules-empty-state">
         <i class="fas fa-search" style="font-size:2.2rem; color:var(--text-muted); margin-bottom:0.75rem;"></i>
         <h4>No matching rules found</h4>
-        <p style="color:var(--text-muted); margin-bottom:1rem;">Try searching with another keyword like "helmet", "speed", "license", "112", or reset your filters.</p>
+        <p style="color:var(--text-muted); margin-bottom:1rem;">Try searching with another keyword like "helmet", "speed", "license", "181", "10000", or reset filters.</p>
         <button class="btn btn-outline btn-sm" onclick="resetRulesSearch()">Reset All Filters</button>
       </div>
     `;
@@ -178,7 +194,7 @@ function renderRoadRules() {
         <div class="rule-card-footer">
           <span class="rule-cat-tag">${escapeHtml(rule.category)}</span>
           <span class="rule-card-repeat">
-            <strong>Repeat Fine:</strong> ${(rule.repeatFine && rule.repeatFine !== '-') ? (isCourt ? rule.repeatFine : '₹ ' + rule.repeatFine) : 'Same'}
+            <strong>Repeat:</strong> ${(rule.repeatFine && rule.repeatFine !== '-') ? (isCourt ? rule.repeatFine : '₹ ' + rule.repeatFine) : 'Same fine'}
           </span>
         </div>
       </div>
@@ -187,7 +203,7 @@ function renderRoadRules() {
 }
 
 function resetRulesSearch() {
-  const searchInput = document.getElementById('rulesSearchInput');
+  const searchInput = document.getElementById('rulesSearchInput') || document.querySelector('.rules-search-field');
   if (searchInput) searchInput.value = '';
   currentRulesSearchQuery = '';
   currentRulesCategory = 'all';
@@ -218,9 +234,17 @@ function highlightMatch(text, query) {
   if (!text) return '';
   if (!query) return escapeHtml(text);
   const escapedText = escapeHtml(text);
-  const escapedQuery = escapeHtml(query);
-  const regex = new RegExp(`(${escapedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-  return escapedText.replace(regex, '<mark class="rules-highlight">$1</mark>');
+  const terms = query.trim().split(/\s+/).filter(t => t.length > 0);
+  if (!terms.length) return escapedText;
+
+  let result = escapedText;
+  terms.forEach(term => {
+    try {
+      const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      result = result.replace(regex, '<mark class="rules-highlight">$1</mark>');
+    } catch (e) {}
+  });
+  return result;
 }
 
 // Global expose

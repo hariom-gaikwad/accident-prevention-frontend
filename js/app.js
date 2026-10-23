@@ -1199,7 +1199,7 @@ function initLeftDropdownMenu() {
    ========================================================================== */
 function initRoadRulesHub() {
   const tabBtns = document.querySelectorAll("#rulesCategoryTabs .rule-tab-btn");
-  const searchInput = document.getElementById("rulesSearchInput");
+  const searchInput = document.getElementById("legacyRulesSearchInput");
   const ruleCards = document.querySelectorAll("#roadRulesGrid .road-rule-card");
 
   if (!ruleCards.length) return;
@@ -1324,17 +1324,7 @@ function switchAppView(viewName) {
     }, 200);
   }
 
-  // Sync mobile bottom action bar active states
-  const mobileMapBtn = document.querySelector('.mobile-bottom-sos-bar .btn-map');
-  const mobileHazardBtn = document.querySelector('.mobile-bottom-sos-bar .btn-hazard');
-  if (mobileMapBtn) {
-    if (target === 'map') mobileMapBtn.classList.add('active');
-    else mobileMapBtn.classList.remove('active');
-  }
-  if (mobileHazardBtn) {
-    if (target === 'hazard') mobileHazardBtn.classList.add('active');
-    else mobileHazardBtn.classList.remove('active');
-  }
+
 
   // Smooth scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' });
