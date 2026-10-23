@@ -814,6 +814,10 @@ body.dark-theme .brand-text h1 { color: #60a5fa; }
   color: var(--text-muted);
   display: block;
   letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
 }
 
 .nav-links {

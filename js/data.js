@@ -651,7 +651,7 @@ const NASHIK_DATA = {
   translations: {
     en: {
       siteTitle: "Safe Nashik",
-      siteTagline: "A Citizen & Pilgrim Safety Initiative by Nashik Community",
+      siteTagline: "Civic & Pilgrim Safety Initiative",
       navHome: "Home",
       navTopics: "Safety Guides",
       navMap: "Interactive Map",
@@ -777,7 +777,7 @@ const NASHIK_DATA = {
     },
     hi: {
       siteTitle: "सुरक्षित नासिक",
-      siteTagline: "नासिकवासियों एवं तीर्थयात्रियों के लिए एक समर्पित नागरिक सुरक्षा पहल",
+      siteTagline: "नागरिक एवं तीर्थयात्री सुरक्षा पहल",
       navHome: "होम",
       navTopics: "सुरक्षा निर्देशिका",
       navMap: "इंटरैक्टिव मानचित्र",
