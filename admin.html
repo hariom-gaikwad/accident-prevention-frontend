@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safe Nashik | Civic Administration Command Center</title>
+  <meta name="description" content="Official administrative dashboard for Safe Nashik portal. Manage police stations, under construction works, accident blackspots, live advisory broadcasts, and citizen hazard reports.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core & Admin Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- ========================================================================
+       1. ADMIN AUTHENTICATION MODAL / SCREEN (Visible when not logged in)
+       ======================================================================== -->
+  <div class="admin-login-overlay" id="adminLoginOverlay">
+    <div class="admin-login-card animate-scale-up">
+      <div class="login-brand">
+        <div class="brand-shield" style="width:54px; height:54px; font-size:1.6rem; margin:0 auto 1rem;">
+          <i class="fas fa-lock"></i>
+        </div>
+        <h2>Civic Command Center</h2>
+        <p>Safe Nashik Administration & Emergency Management Portal</p>
+      </div>
+
+      <div class="credentials-tip-box">
+        <i class="fas fa-key text-warning"></i>
+        <div>
+          <strong>Default Admin Credentials:</strong>
+          <span>User: <code>admin</code> &bull; Password: <code>admin@safenashik2026</code></span>
+        </div>
+      </div>
+
+      <form id="adminLoginForm" class="login-form">
+        <div class="form-group">
+          <label for="adminUsername"><i class="fas fa-user-shield"></i> Username</label>
+          <input type="text" id="adminUsername" class="form-control" placeholder="Enter admin username" required autocomplete="username" value="admin">
+        </div>
+
+        <div class="form-group">
+          <label for="adminPassword"><i class="fas fa-lock"></i> Password</label>
+          <input type="password" id="adminPassword" class="form-control" placeholder="Enter admin password" required autocomplete="current-password" value="admin@safenashik2026">
+        </div>
+
+        <div id="loginErrorMessage" class="login-error-msg" style="display:none;"></div>
+
+        <button type="submit" class="btn btn-primary" id="loginSubmitBtn" style="width:100%; justify-content:center; padding:0.85rem;">
+          <i class="fas fa-right-to-bracket"></i> Login to Command Center
+        </button>
+
+        <a href="/" class="login-back-link"><i class="fas fa-arrow-left"></i> Return to Public Safety Portal</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       2. ADMIN DASHBOARD INTERFACE (Visible when logged in)
+       ======================================================================== -->
+  <div class="admin-dashboard-layout" id="adminDashboardLayout" style="display:none;">
+
+    <!-- Admin Topbar -->
+    <header class="admin-topbar">
+      <div class="topbar-left">
+        <a href="/" class="admin-site-brand">
+          <div class="brand-shield" style="width:38px; height:38px; font-size:1.1rem;">
+            <i class="fas fa-shield-halved"></i>
+          </div>
+          <div>
+            <h1>Safe Nashik Admin</h1>
+            <span>Command & Data Hub</span>
+          </div>
+        </a>
+        <span class="server-status-pill"><span class="pulse-dot"></span> API Server Live</span>
+      </div>
+
+      <div class="topbar-right">
+        <a href="/" target="_blank" class="btn-topbar-link" title="Open Public Website in New Tab">
+          <i class="fas fa-globe"></i> View Public Site
+        </a>
+        <div class="admin-user-badge">
+          <i class="fas fa-circle-user"></i>
+          <span id="currentAdminName">Administrator</span>
+        </div>
+        <button type="button" class="btn-logout" id="adminLogoutBtn">
+          <i class="fas fa-power-off"></i> Logout
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="admin-main container">
+
+      <!-- Stats Overview Ribbon -->
+      <section class="admin-stats-grid">
+        <div class="admin-stat-card">
+          <div class="stat-icon bg-blue"><i class="fas fa-map-location-dot"></i></div>
+          <div class="stat-content">
+            <span class="stat-label">Total Map Points</span>
+            <strong class="stat-number" id="statTotalLocations">--</strong>
+            <span class="stat-sub">Hospitals, police, works, blackspots</span>
+          </div>
+        </div>
+
+        <div class="admin-stat-card">
+          <div class="stat-icon bg-amber"><i class="fas fa-person-digging"></i></div>
+          <div class="stat-content">
+            <span class="stat-label">Work in Progress</span>
+            <strong class="stat-number" id="statConstruction">--</strong>
+            <span class="stat-sub">Active road & bridge construction</span>
+          </div>
+        </div>
+
+        <div class="admin-stat-card">
+          <div class="stat-icon bg-red"><i class="fas fa-triangle-exclamation"></i></div>
+          <div class="stat-content">
+            <span class="stat-label">Pending Hazard Reports</span>
+            <strong class="stat-number" id="statPendingHazards">--</strong>
+            <span class="stat-sub">Reported by citizens</span>
+          </div>
+        </div>
+
+        <div class="admin-stat-card">
+          <div class="stat-icon bg-emerald"><i class="fas fa-bullhorn"></i></div>
+          <div class="stat-content">
+            <span class="stat-label">Live Broadcasts</span>
+            <strong class="stat-number" id="statAnnouncements">--</strong>
+            <span class="stat-sub">Streaming on news ticker</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Navigation Tabs -->
+      <div class="admin-nav-tabs" role="tablist">
+        <button type="button" class="admin-tab-btn active" data-tab="tabLocations">
+          <i class="fas fa-location-dot"></i> Map Locations (Police, Works, Blackspots)
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="tabAnnouncements">
+          <i class="fas fa-bullhorn"></i> Live Advisory Ticker
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="tabHazards">
+          <i class="fas fa-circle-exclamation"></i> Citizen Hazard Grievances
+          <span class="tab-counter-badge" id="hazardBadgeCount">0</span>
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="tabRules">
+          <i class="fas fa-gavel"></i> Road Rules & Fines
+        </button>
+      </div>
+
+      <!-- ======================================================================
+           TAB 1: MAP LOCATIONS MANAGER (Police, Construction, Blackspots)
+           ====================================================================== -->
+      <section class="admin-tab-panel active" id="tabLocations">
+        <div class="panel-header-actions">
+          <div>
+            <h3>Managed GIS Safety Locations</h3>
+            <p>Add, update, or remove police stations, construction zones, blackspots, and emergency points.</p>
+          </div>
+          <button type="button" class="btn btn-primary" id="openAddLocationModalBtn">
+            <i class="fas fa-plus-circle"></i> Add New Location
+          </button>
+        </div>
+
+        <!-- Filter and Search Bar -->
+        <div class="admin-table-toolbar">
+          <div class="filter-pill-group">
+            <button type="button" class="loc-filter-chip active" data-cat="all">All</button>
+            <button type="button" class="loc-filter-chip" data-cat="police">🚓 Police Stations</button>
+            <button type="button" class="loc-filter-chip" data-cat="construction">🚧 Under Construction</button>
+            <button type="button" class="loc-filter-chip" data-cat="blackspot">⚠️ Blackspots</button>
+            <button type="button" class="loc-filter-chip" data-cat="hospital">🏥 Hospitals</button>
+            <button type="button" class="loc-filter-chip" data-cat="ghat">🌊 Ghats</button>
+          </div>
+          <div class="table-search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="locTableSearch" placeholder="Filter by name, road, jurisdiction...">
+          </div>
+        </div>
+
+        <!-- Table View -->
+        <div class="admin-table-card">
+          <table class="admin-data-table" id="locationsTable">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Location / Landmark</th>
+                <th>Coordinates (Lat, Lng)</th>
+                <th>Safety Advisory / Details</th>
+                <th>Contact</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="locationsTableBody">
+              <!-- Populated via admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 2: LIVE ADVISORY BROADCASTS
+           ====================================================================== -->
+      <section class="admin-tab-panel" id="tabAnnouncements">
+        <div class="panel-header-actions">
+          <div>
+            <h3>Live Ticker Broadcasts</h3>
+            <p>Post breaking news, water discharge warnings, and construction detours displayed on the public ticker.</p>
+          </div>
+        </div>
+
+        <div class="admin-two-col-grid">
+          <!-- Broadcast Form -->
+          <div class="admin-form-card">
+            <h4><i class="fas fa-bullhorn text-primary"></i> Create Urgent Broadcast</h4>
+            <form id="announcementForm">
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="annBadge">Badge Label</label>
+                  <input type="text" id="annBadge" class="form-control" placeholder="e.g. ALERT, TRAFFIC, DANGER" value="TRAFFIC" required>
+                </div>
+                <div class="form-group">
+                  <label for="annType">Badge Color / Type</label>
+                  <select id="annType" class="form-control">
+                    <option value="danger">Red (Severe Emergency / Flood)</option>
+                    <option value="warning" selected>Orange (Traffic / Construction)</option>
+                    <option value="primary">Blue (Civic Event / Kumbh)</option>
+                    <option value="info">Teal (General Public Notice)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="annTextEn">English Announcement Message *</label>
+                <textarea id="annTextEn" class="form-control" rows="2" placeholder="e.g. Road work underway at Dwarka Circle. Heavy trucks diverted via Wadala bypass." required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="annTextMr">Marathi Announcement (मराठी)</label>
+                <textarea id="annTextMr" class="form-control" rows="2" placeholder="उदा. द्वारका सर्कल येथे बांधकाम सुरू. अवजड वाहने वडाळा बायपासने वळवली आहेत."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="annTextHi">Hindi Announcement (हिंदी)</label>
+                <textarea id="annTextHi" class="form-control" rows="2" placeholder="उदा. द्वारका सर्कल पर निर्माण कार्य प्रगति पर। भारी वाहन वडाला बाईपास से जाएं।"></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+                <i class="fas fa-tower-broadcast"></i> Broadcast Live Advisory
+              </button>
+            </form>
+          </div>
+
+          <!-- Active Announcements List -->
+          <div class="admin-announcements-list-card">
+            <h4><i class="fas fa-radio text-danger"></i> Currently Streaming on Ticker</h4>
+            <div id="activeAnnouncementsList" class="announcements-stack">
+              <!-- Populated via admin.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 3: CITIZEN HAZARD GRIEVANCE RESOLVER
+           ====================================================================== -->
+      <section class="admin-tab-panel" id="tabHazards">
+        <div class="panel-header-actions">
+          <div>
+            <h3>Citizen Hazard Reports & Pothole Grievances</h3>
+            <p>Review complaints submitted by citizens, assign field crews, and track resolution progress.</p>
+          </div>
+        </div>
+
+        <div class="admin-table-toolbar">
+          <div class="filter-pill-group">
+            <button type="button" class="hazard-filter-chip active" data-status="all">All Complaints</button>
+            <button type="button" class="hazard-filter-chip" data-status="pending">🟡 Pending Review</button>
+            <button type="button" class="hazard-filter-chip" data-status="in_progress">🟠 Work Crew Dispatched</button>
+            <button type="button" class="hazard-filter-chip" data-status="resolved">🟢 Resolved</button>
+          </div>
+        </div>
+
+        <div class="admin-table-card">
+          <table class="admin-data-table" id="hazardsTable">
+            <thead>
+              <tr>
+                <th>Tracking ID</th>
+                <th>Hazard Category</th>
+                <th>Location / Landmark</th>
+                <th>Citizen Details</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="hazardsTableBody">
+              <!-- Populated via admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           TAB 4: ROAD RULES & FINES EDITOR
+           ====================================================================== -->
+      <section class="admin-tab-panel" id="tabRules">
+        <div class="panel-header-actions">
+          <div>
+            <h3>Traffic Regulations & Motor Vehicle Fines</h3>
+            <p>Publish newly gazetted MV Act rules, updated penalty amounts, and local Nashik Police guidelines.</p>
+          </div>
+          <button type="button" class="btn btn-primary" id="openAddRuleModalBtn">
+            <i class="fas fa-plus-circle"></i> Add New Road Rule
+          </button>
+        </div>
+
+        <div class="admin-table-card">
+          <table class="admin-data-table" id="rulesTable">
+            <thead>
+              <tr>
+                <th>Rule Name</th>
+                <th>MV Act Section</th>
+                <th>Category</th>
+                <th>Fine / Consequence Badge</th>
+                <th>Safety Rationale</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="rulesTableBody">
+              <!-- Populated via admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 1: ADD / EDIT MAP LOCATION
+       ======================================================================== -->
+  <div class="admin-modal-backdrop" id="locationModal" style="display:none;">
+    <div class="admin-modal-card animate-scale-up">
+      <div class="modal-header">
+        <h3 id="locModalTitle"><i class="fas fa-map-pin text-primary"></i> Add New Safety Location</h3>
+        <button type="button" class="admin-modal-close" id="closeLocModalBtn">&times;</button>
+      </div>
+
+      <form id="locationForm" class="modal-form">
+        <input type="hidden" id="locFormId">
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="locName">Location Name (English) *</label>
+            <input type="text" id="locName" class="form-control" placeholder="e.g. Mumbai Naka Police Station" required>
+          </div>
+          <div class="form-group">
+            <label for="locCategory">Category *</label>
+            <select id="locCategory" class="form-control" required>
+              <option value="police">🚓 Police Station / Traffic Beat</option>
+              <option value="construction">🚧 Under Construction / Road Work</option>
+              <option value="blackspot">⚠️ Accident Blackspot</option>
+              <option value="hospital">🏥 Hospital & Trauma Center</option>
+              <option value="ghat">🌊 Godavari Ghat & Water Safety</option>
+              <option value="kumbh">🎪 Kumbh 2027 Holding Area</option>
+              <option value="fire">🚒 Fire Station</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="locNameMr">Name in Marathi (मराठी)</label>
+            <input type="text" id="locNameMr" class="form-control" placeholder="उदा. मुंबई नाका पोलीस ठाणे">
+          </div>
+          <div class="form-group">
+            <label for="locNameHi">Name in Hindi (हिंदी)</label>
+            <input type="text" id="locNameHi" class="form-control" placeholder="उदा. मुंबई नाका पुलिस स्टेशन">
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="locLat">Latitude * (Nashik ~19.9 to 20.1)</label>
+            <input type="number" step="0.0001" id="locLat" class="form-control" placeholder="19.9835" required>
+          </div>
+          <div class="form-group">
+            <label for="locLng">Longitude * (Nashik ~73.7 to 73.9)</label>
+            <input type="number" step="0.0001" id="locLng" class="form-control" placeholder="73.7872" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="locAddress">Address / Road Name *</label>
+          <input type="text" id="locAddress" class="form-control" placeholder="e.g. Mumbai Naka, NH-3 Flyover Junction, Nashik" required>
+        </div>
+
+        <!-- Conditional construction details -->
+        <div id="constructionFieldsRow" class="form-row-2" style="display:none;">
+          <div class="form-group">
+            <label for="locWorkType"><i class="fas fa-person-digging text-warning"></i> Work Type</label>
+            <input type="text" id="locWorkType" class="form-control" placeholder="e.g. Flyover widening & stormwater trenching">
+          </div>
+          <div class="form-group">
+            <label for="locDetour"><i class="fas fa-route text-info"></i> Detour Route</label>
+            <input type="text" id="locDetour" class="form-control" placeholder="e.g. Heavy vehicles diverted via Wadala Naka">
+          </div>
+        </div>
+
+        <!-- Conditional police details -->
+        <div id="policeFieldsRow" class="form-row-2">
+          <div class="form-group">
+            <label for="locJurisdiction"><i class="fas fa-shield"></i> Beat / Jurisdiction</label>
+            <input type="text" id="locJurisdiction" class="form-control" placeholder="e.g. Mumbai Naka, Govind Nagar, Highway Corridor">
+          </div>
+          <div class="form-group">
+            <label for="locPhone"><i class="fas fa-phone"></i> Landline / Control Room Phone</label>
+            <input type="text" id="locPhone" class="form-control" placeholder="0253-2594411">
+          </div>
+        </div>
+
+        <!-- Conditional blackspot details -->
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="locSeverity">Risk Severity</label>
+            <select id="locSeverity" class="form-control">
+              <option value="">None / Not Applicable</option>
+              <option value="Critical (High Fatalities / High Speed)">Critical (High Fatalities)</option>
+              <option value="High (Multi-lane highway convergence)">High (Highway Convergence)</option>
+              <option value="Medium-High (Blind curve / heavy freight)">Medium-High (Blind Curve)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="locEmergency">Emergency Helpline Number</label>
+            <input type="text" id="locEmergency" class="form-control" value="112" placeholder="112 or 108">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="locAdvisory">Safety Advisory / Instructions</label>
+          <textarea id="locAdvisory" class="form-control" rows="2" placeholder="e.g. Speed limit 20 km/h. Narrowed carriageway with traffic barricades."></textarea>
+        </div>
+
+        <div class="modal-actions-row">
+          <button type="button" class="btn btn-secondary" id="cancelLocModalBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveLocBtn"><i class="fas fa-check"></i> Save Location</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 2: ADD ROAD RULE
+       ======================================================================== -->
+  <div class="admin-modal-backdrop" id="ruleModal" style="display:none;">
+    <div class="admin-modal-card animate-scale-up">
+      <div class="modal-header">
+        <h3><i class="fas fa-gavel text-primary"></i> Add Traffic Regulation / Road Rule</h3>
+        <button type="button" class="admin-modal-close" id="closeRuleModalBtn">&times;</button>
+      </div>
+
+      <form id="ruleForm" class="modal-form">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="ruleName">Rule Name *</label>
+            <input type="text" id="ruleName" class="form-control" placeholder="e.g. Minor & Underage Driving Ban" required>
+          </div>
+          <div class="form-group">
+            <label for="ruleCategory">Category *</label>
+            <select id="ruleCategory" class="form-control" required>
+              <option value="new">⚡ New 2024–2026 Amendment</option>
+              <option value="twowheeler">🛵 Two-Wheeler Mandate</option>
+              <option value="fourwheeler">🚗 Four-Wheeler & Highway</option>
+              <option value="signals">🛑 Signals & Right-of-Way</option>
+              <option value="samaritan">🤝 Good Samaritan Rights</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="ruleSection">MV Act Legal Section *</label>
+            <input type="text" id="ruleSection" class="form-control" placeholder="e.g. Section 199A MV Act" required>
+          </div>
+          <div class="form-group">
+            <label for="rulePenaltyBadge">Penalty / Fine Badge *</label>
+            <input type="text" id="rulePenaltyBadge" class="form-control" placeholder="e.g. ₹25,000 Fine + 3 Yrs Jail" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ruleDesc">Rule Explanation & Legal Requirement *</label>
+          <textarea id="ruleDesc" class="form-control" rows="3" placeholder="Full explanation of the traffic rule..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="ruleLocalNote">Nashik Police Focus / Enforcement Note</label>
+          <input type="text" id="ruleLocalNote" class="form-control" placeholder="e.g. Strict checks near college road and Dwarka.">
+        </div>
+
+        <div class="modal-actions-row">
+          <button type="button" class="btn btn-secondary" id="cancelRuleModalBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Save Road Rule</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Application Logic Script -->
+  <script src="js/admin.js"></script>
+</body>
+</html>

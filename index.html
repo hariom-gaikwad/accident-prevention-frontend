@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safe Nashik | Accident Prevention & Community Awareness Portal</title>
+  <meta name="description" content="Nashik City year-round community safety and accident prevention portal. Road safety blackspots, Godavari river precautions, fire defense, emergency contacts 108/112, and Kumbh Mela 2027 crowd management.">
+  <meta name="keywords" content="Nashik accident prevention, road safety Nashik, Godavari river safety, Kumbh Mela safety 2027, Nashik black spots, emergency 108 Nashik">
+
+  <!-- Favicon Icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Leaflet CSS for Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       Top Accessibility & Civic Header Strip
+       ======================================================================== -->
+  <div class="top-accessibility-bar" id="topBar">
+    <div class="container top-bar-inner">
+      <div class="govt-badge">
+        <i class="fas fa-shield-halved"></i>
+        <span>NASHIK CIVIC SAFETY & ACCIDENT MITIGATION INITIATIVE</span>
+      </div>
+      <div class="access-controls">
+        <!-- Font Resizing -->
+        <div class="font-size-ctrls" title="Adjust Text Size">
+          <span style="font-size:0.75rem; color:#94a3b8;">Font:</span>
+          <button type="button" class="font-btn" id="btnFontDecrease" aria-label="Decrease font">A-</button>
+          <button type="button" class="font-btn" id="btnFontNormal" aria-label="Normal font">A</button>
+          <button type="button" class="font-btn" id="btnFontIncrease" aria-label="Increase font">A+</button>
+        </div>
+
+        <!-- High Contrast & Dark Mode -->
+        <button type="button" class="contrast-btn" id="contrastToggleBtn" title="High Contrast Mode for Low Vision">
+          <i class="fas fa-adjust"></i> High Contrast
+        </button>
+        <button type="button" class="theme-icon-btn" id="themeToggleBtn" title="Toggle Dark/Light Mode">
+          <i class="fas fa-moon"></i>
+        </button>
+
+        <!-- Multilingual Switcher -->
+        <div class="lang-selector-box">
+          <label for="langSwitcher" class="sr-only" style="display:none;">Language</label>
+          <select id="langSwitcher" aria-label="Select Language">
+            <option value="en">English</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="hi">हिंदी (Hindi)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       Main Site Navigation
+       ======================================================================== -->
+  <header class="site-header">
+    <nav class="navbar-container">
+      <div class="nav-left-cluster">
+        <!-- Left Drop Down Menu Trigger & Panel -->
+        <div class="left-dropdown-wrap" id="leftDropdownWrap">
+          <button type="button" class="left-dropdown-btn" id="leftDropdownBtn" aria-expanded="false" aria-haspopup="true" aria-label="Open Left Navigation Dropdown Menu" title="Open Navigation Menu">
+            <span class="left-btn-icon-box"><i class="fas fa-bars-staggered"></i></span>
+            <span class="left-btn-text">Menu</span>
+            <i class="fas fa-chevron-down left-btn-chevron"></i>
+          </button>
+
+          <!-- Left Drop Down Menu Panel -->
+          <div class="left-dropdown-panel" id="leftDropdownPanel" role="menu" aria-label="Left Side Dropdown Menu">
+            <div class="dropdown-panel-header">
+              <div class="panel-header-title">
+                <i class="fas fa-compass"></i>
+                <div>
+                  <strong>Navigation & Services</strong>
+                  <span class="panel-subtitle">Explore Safe Nashik Portal</span>
+                </div>
+              </div>
+              <button type="button" class="dropdown-close-btn" id="leftDropdownCloseBtn" aria-label="Close Dropdown Menu">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+
+            <!-- Instant Search Filter in Dropdown -->
+            <div class="dropdown-search-box">
+              <i class="fas fa-magnifying-glass"></i>
+              <input type="text" id="dropdownSearchInput" placeholder="Quick find guide, map, helpline..." autocomplete="off" aria-label="Search inside menu">
+            </div>
+
+            <div class="dropdown-panel-body" id="dropdownPanelBody">
+              <!-- Section: Main Modules -->
+              <div class="dropdown-section">
+                <span class="dropdown-section-label">CORE MODULES</span>
+                <div class="dropdown-links-list">
+                  <a href="#home" class="dropdown-item" data-filter="home dashboard overview live advisory stats">
+                    <span class="dropdown-item-icon bg-blue"><i class="fas fa-house-chimney"></i></span>
+                    <div class="dropdown-item-info">
+                      <span class="dropdown-item-title">Home Dashboard</span>
+                      <span class="dropdown-item-desc">Live alerts, vital stats & mission</span>
+                    </div>
+                  </a>
+                  <a href="#safetyTopics" class="dropdown-item" data-filter="safety guides rules road godavari ghats fire electrical monsoon precautions">
+                    <span class="dropdown-item-icon bg-teal"><i class="fas fa-shield-halved"></i></span>
+                    <div class="dropdown-item-info">
+                      <span class="dropdown-item-title">Safety Guides & Modules</span>
+                      <span class="dropdown-item-desc">Road rules, Godavari Ghats, Fire & Monsoon</span>
+                    </div>
+                  </a>
+                  <a href="#roadRulesSection" class="dropdown-item" data-filter="road rules traffic regulations fines penalties new mv act amendments speed limits signals minor drunk driving helmet seatbelt 2024 2025 2026">
+                    <span class="dropdown-item-icon bg-amber"><i class="fas fa-traffic-light"></i></span>
+                    <div class="dropdown-item-info">
+                      <span class="dropdown-item-title">All Road Rules & Penalties</span>
+                      <span class="dropdown-item-desc">New MV Act amendments, fines & traffic laws</span>
+                    </div>
+                    <span class="badge-pill pill-live" style="background:rgba(245,158,11,0.15); color:#d97706; border-color:rgba(245,158,11,0.3);">NEW</span>
+                  </a>
+                  <a href="#interactiveMap" class="dropdown-item" data-filter="interactive blackspot map dwarka mumbai naka pathardi live gps">
+                    <span class="dropdown-item-icon bg-indigo"><i class="fas fa-map-location-dot"></i></span>
+                    <div class="dropdown-item-info">
+                      <span class="dropdown-item-title">Interactive Blackspot Map</span>
+                      <span class="dropdown-item-desc">Dwarka, Mumbai Naka, Pathardi Phata & GPS</span>
+                    </div>
+                    <span class="badge-pill pill-live">LIVE MAP</span>
+                  </a>
+                  <a href="#speedCalculator" class="dropdown-item" data-filter="speed radar lab braking distance stopping calculator simulator">
+                    <span class="dropdown-item-icon bg-cyan"><i class="fas fa-gauge-high"></i></span>
+                    <div class="dropdown-item-info">
+                      <span class="dropdown-item-title">Speed Radar Lab</span>
+                      <span class="dropdown-item-desc">Calculate stopping & braking distance</span>
+                    </div>
+                  </a>
+                  <a href="#hazardReporting" class="dropdown-item" data-filter="report hazard blackspot grievance pothole broken signal submit form">
+                    <span class="dropdown-item-icon bg-amber"><i class="fas fa-triangle-exclamation"></i></span>
+                    <div class="dropdown-item-info">
+                      <span class="dropdown-item-title">Report Hazard / Blackspot</span>
+                      <span class="dropdown-item-desc">Submit road risk or broken signal</span>
+                    </div>
+                  </a>
+                  <a href="#kumbhSpecial" class="dropdown-item item-highlight-kumbh" data-filter="kumbh mela 2027 crowd safety ramkund trimbakeshwar shahi snan ghats">
+                    <span class="dropdown-item-icon bg-saffron"><i class="fas fa-om"></i></span>
+                    <div class="dropdown-item-info">
+                      <span class="dropdown-item-title">Kumbh Mela 2027 Safety</span>
+                      <span class="dropdown-item-desc">Crowd control, Ramkund & Trimbak guides</span>
+                    </div>
+                    <span class="badge-pill pill-kumbh">2027</span>
+                  </a>
+                  <a href="#safetyQuiz" class="dropdown-item" data-filter="safety quiz test certificate questions knowledge badge score">
+                    <span class="dropdown-item-icon bg-purple"><i class="fas fa-award"></i></span>
+                    <div class="dropdown-item-info">
+                      <span class="dropdown-item-title">Safety Quiz & Certificate</span>
+                      <span class="dropdown-item-desc">Test awareness & earn verified certificate</span>
+                    </div>
+                  </a>
+                  <a href="#communityPledge" class="dropdown-item" data-filter="citizen safety pledge oath digital id card download driver license">
+                    <span class="dropdown-item-icon bg-emerald"><i class="fas fa-id-card"></i></span>
+                    <div class="dropdown-item-info">
+                      <span class="dropdown-item-title">Citizen Safety Pledge</span>
+                      <span class="dropdown-item-desc">Take oath & download official Citizen ID</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Section: Emergency Direct Dials -->
+              <div class="dropdown-section">
+                <span class="dropdown-section-label">INSTANT EMERGENCY HOTLINES</span>
+                <div class="dropdown-hotlines-grid">
+                  <a href="tel:108" class="hotline-card hl-red" data-filter="108 ambulance medical health hospital emergency">
+                    <i class="fas fa-truck-medical"></i>
+                    <div>
+                      <span class="hl-num">108</span>
+                      <span class="hl-name">Ambulance</span>
+                    </div>
+                  </a>
+                  <a href="tel:112" class="hotline-card hl-blue" data-filter="112 police cop control room national emergency">
+                    <i class="fas fa-shield"></i>
+                    <div>
+                      <span class="hl-num">112</span>
+                      <span class="hl-name">Police SOS</span>
+                    </div>
+                  </a>
+                  <a href="tel:101" class="hotline-card hl-orange" data-filter="101 fire brigade rescue emergency">
+                    <i class="fas fa-fire-extinguisher"></i>
+                    <div>
+                      <span class="hl-num">101</span>
+                      <span class="hl-name">Fire Dept</span>
+                    </div>
+                  </a>
+                  <a href="tel:1091" class="hotline-card hl-rose" data-filter="1091 women safety helpline distress">
+                    <i class="fas fa-person-shelter"></i>
+                    <div>
+                      <span class="hl-num">1091</span>
+                      <span class="hl-name">Women Helpline</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Section: Civic Administration Portal -->
+              <div class="dropdown-section">
+                <span class="dropdown-section-label">ADMINISTRATION</span>
+                <div class="dropdown-links-list">
+                  <a href="/admin" class="dropdown-item" data-filter="admin login command center police construction blackspots manager civic admin portal">
+                    <span class="dropdown-item-icon bg-blue"><i class="fas fa-lock"></i></span>
+                    <div class="dropdown-item-info">
+                      <span class="dropdown-item-title">Civic Command Center</span>
+                      <span class="dropdown-item-desc">Admin login: manage GIS points, live alerts & reports</span>
+                    </div>
+                    <span class="badge-pill pill-live" style="background:rgba(37,99,235,0.15); color:#2563eb; border-color:rgba(37,99,235,0.3);">ADMIN</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Section: Quick Settings & Tools -->
+              <div class="dropdown-section">
+                <span class="dropdown-section-label">QUICK CONTROLS</span>
+                <div class="dropdown-quick-tools">
+                  <button type="button" class="quick-tool-btn" id="dropdownThemeBtn">
+                    <i class="fas fa-moon"></i> <span>Dark Mode</span>
+                  </button>
+                  <button type="button" class="quick-tool-btn" id="dropdownContrastBtn">
+                    <i class="fas fa-adjust"></i> <span>Contrast</span>
+                  </button>
+                  <button type="button" class="quick-tool-btn quick-tool-sos" id="dropdownSosBtn">
+                    <i class="fas fa-phone-volume"></i> <span>SOS Modal</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="dropdown-panel-footer">
+              <i class="fas fa-circle-check" style="color:var(--success);"></i>
+              <span>Official Civic Safety Portal &bull; Nashik City</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="#home" class="site-brand">
+          <div class="brand-shield">
+            <i class="fas fa-heart-pulse"></i>
+          </div>
+          <div class="brand-text">
+            <h1 data-i18n="siteTitle">सुरक्षित नाशिक | Safe Nashik</h1>
+            <span data-i18n="siteTagline">Civic Accident Prevention & Kumbh Awareness</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="nav-cta-group">
+        <a href="/admin" class="btn btn-outline admin-header-btn" title="Civic Administration Portal" style="padding:0.5rem 0.9rem; font-size:0.84rem; font-weight:700; border-radius:50px; display:inline-flex; align-items:center; gap:0.4rem; text-decoration:none; border:1px solid rgba(37,99,235,0.3); color:var(--primary); background:rgba(37,99,235,0.06); transition:all 0.2s ease;">
+          <i class="fas fa-lock"></i> <span>Admin</span>
+        </a>
+        <button type="button" class="btn-sos-dial" id="openSosModalBtn">
+          <i class="fas fa-phone-volume"></i> <span>EMERGENCY SOS</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+  
+  <!-- Backdrop Overlay for Left Dropdown Menu -->
+  <div class="left-dropdown-backdrop" id="leftDropdownBackdrop" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       Live News & Advisory Ticker
+       ======================================================================== -->
+  <div class="live-ticker-wrap">
+    <div class="container ticker-content">
+      <div class="ticker-head-label">
+        <i class="fas fa-bullhorn"></i> <span>LIVE ADVISORY</span>
+      </div>
+      <div id="liveAnnouncementTicker" class="ticker-content" style="display:inline-flex; gap:1.5rem;">
+        <!-- Populated dynamically from data.js -->
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- ======================================================================
+         Hero Section
+         ====================================================================== -->
+    <section class="hero-section" id="home">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="fas fa-award"></i> <span>Community Safety Mission • Nashik Metropolitan</span>
+          </div>
+          <h2 class="hero-headline" data-i18n="heroHeadline">
+            Protecting Every Life in Nashik — <span class="highlight">365 Days a Year</span>
+          </h2>
+          <p class="hero-subheadline" data-i18n="heroSubheadline">
+            Comprehensive community safety portal for daily road vigilance, home fire defense, Godavari river precautions, and Kumbh Mela crowd preparedness.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#interactiveMap" class="btn btn-primary" data-i18n="btnExploreMap">
+              <i class="fas fa-map-marked-alt"></i> View Safety Map & Blackspots
+            </a>
+            <a href="#hazardReporting" class="btn btn-outline" data-i18n="btnReportHazard">
+              <i class="fas fa-triangle-exclamation"></i> Report a Hazard Now
+            </a>
+            <button type="button" class="btn btn-danger" onclick="document.getElementById('openSosModalBtn').click()" data-i18n="btnEmergencyCall">
+              <i class="fas fa-truck-medical"></i> Emergency SOS (108 / 112)
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-visual-card">
+          <img src="assets/images/hero-banner.jpg" alt="Safe Nashik Civic Awareness Banner - Road, River and Life Safety" class="hero-banner-img" id="heroBannerImg">
+          <div class="hero-floating-stat">
+            <div class="stat-item">
+              <span class="stat-num" id="heroStatPledges">1,480+</span>
+              <span class="stat-label" data-i18n="quickStatsPledges">Safety Pledges</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">14</span>
+              <span class="stat-label" data-i18n="quickStatsBlackspots">Tracked Blackspots</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">24/7</span>
+              <span class="stat-label" data-i18n="quickStatsHospitals">Trauma Response</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Quick One-Tap Emergency Strip
+         ====================================================================== -->
+    <section class="emergency-strip" aria-label="Emergency Helplines">
+      <div class="container emergency-strip-grid">
+        <a href="tel:108" class="quick-call-card" title="Free 24/7 Medical Ambulance">
+          <div class="call-icon ambulance"><i class="fas fa-ambulance"></i></div>
+          <div class="call-meta">
+            <h5>Ambulance / Trauma</h5>
+            <span class="tel-number">108</span>
+          </div>
+        </a>
+
+        <a href="tel:112" class="quick-call-card" title="National Emergency Helpline">
+          <div class="call-icon police"><i class="fas fa-shield-alt"></i></div>
+          <div class="call-meta">
+            <h5>Police & Disaster</h5>
+            <span class="tel-number">112</span>
+          </div>
+        </a>
+
+        <a href="tel:101" class="quick-call-card" title="Nashik Fire Brigade Service">
+          <div class="call-icon fire"><i class="fas fa-fire-extinguisher"></i></div>
+          <div class="call-meta">
+            <h5>Fire Brigade Control</h5>
+            <span class="tel-number">101</span>
+          </div>
+        </a>
+
+        <a href="tel:02532227100" class="quick-call-card" title="Godavari Flood & District Disaster Management">
+          <div class="call-icon flood"><i class="fas fa-water"></i></div>
+          <div class="call-meta">
+            <h5>Flood & River Cell</h5>
+            <span class="tel-number">0253-2227100</span>
+          </div>
+        </a>
+
+        <a href="tel:02532576106" class="quick-call-card" title="District Civil Hospital Emergency Nashik">
+          <div class="call-icon ambulance"><i class="fas fa-hospital"></i></div>
+          <div class="call-meta">
+            <h5>Civil Hospital Trauma</h5>
+            <span class="tel-number">0253-2576106</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Core Accident Prevention Topics (7 Critical Domains)
+         ====================================================================== -->
+    <section class="section-wrapper" id="safetyTopics">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag" data-i18n="topicsHeading">Accident Prevention Domains</span>
+          <h2 class="section-title">Life-Saving Knowledge for Every Nashikkar</h2>
+          <p class="section-subtitle" data-i18n="topicsSubtitle">Actionable guidelines tailored for Nashik roads, homes, industries and sacred ghats.</p>
+        </div>
+
+        <div class="safety-topics-grid">
+          <!-- 1. Road & Highway Safety -->
+          <article class="safety-card" id="topicRoad">
+            <div class="safety-card-header">
+              <div class="card-topic-icon road"><i class="fas fa-motorcycle"></i></div>
+              <div class="card-topic-titles">
+                <h3>Road & Highway Safety</h3>
+                <span>Mumbai-Nashik NH-3 & Nashik-Trimbak</span>
+              </div>
+            </div>
+            <div class="safety-card-body">
+              <p>Road accidents cause over 82% of trauma admissions at Nashik Civil Hospital, especially at high-speed junctions.</p>
+              <ul class="safety-list">
+                <li><strong>ISI Mark Helmets:</strong> Always buckle up chin-straps. Reduces fatal head trauma by 70%.</li>
+                <li><strong>Blackspot Caution:</strong> Extreme care at Dwarka Circle, Pathardi Phata & Mumbai Naka.</li>
+                <li><strong>No Mobile Phones:</strong> A 2-second glance at 60 km/h means travelling 33 meters blind.</li>
+                <li><strong>Drunk Driving:</strong> Zero tolerance. Blood alcohol limit is 30mg/100ml. Use designated drivers.</li>
+              </ul>
+            </div>
+            <div class="safety-card-footer">
+              <button type="button" class="btn-read-aloud" data-target="#topicRoad" title="Listen to Road Safety Tips">
+                <i class="fas fa-volume-high"></i> Listen Aloud
+              </button>
+              <a href="https://api.whatsapp.com/send?text=🚨%20Nashik%20Road%20Safety%20Tip:%20Never%20skip%20helmets%20and%20slow%20down%20at%20Dwarka%20Circle%20blackspot.%20Check%20live%20Nashik%20safety%20portal!" target="_blank" rel="noopener" class="btn-micro" style="background:#25D366; color:#fff;" title="Share on WhatsApp">
+                <i class="fab fa-whatsapp"></i> Share
+              </a>
+            </div>
+          </article>
+
+          <!-- 2. Godavari River & Ghat Safety -->
+          <article class="safety-card" id="topicRiver">
+            <div class="safety-card-header">
+              <div class="card-topic-icon river"><i class="fas fa-person-swimming"></i></div>
+              <div class="card-topic-titles">
+                <h3>River & Ghat Safety</h3>
+                <span>Ramkund, Tapovan & Gangapur Dam</span>
+              </div>
+            </div>
+            <div class="safety-card-body">
+              <p>Godavari river currents become treacherous during dam discharge and monsoon flash surges.</p>
+              <ul class="safety-list">
+                <li><strong>Yellow Chain Boundary:</strong> At Ramkund and Lakshman Kund, bathe strictly within chained safety enclosures.</li>
+                <li><strong>Never Jump from Bridges:</strong> Submerged rock boulders cause fatal cervical spine paralysis.</li>
+                <li><strong>Someshwar Waterfall:</strong> Strictly obey barrier ropes; rocks have slippery algae layers.</li>
+                <li><strong>Drowning Rescue:</strong> Reach with bamboo or throw lifebuoys. Never dive in unprepared!</li>
+              </ul>
+            </div>
+            <div class="safety-card-footer">
+              <button type="button" class="btn-read-aloud" data-target="#topicRiver" title="Listen to River Safety Tips">
+                <i class="fas fa-volume-high"></i> Listen Aloud
+              </button>
+              <a href="https://api.whatsapp.com/send?text=🌊%20Godavari%20River%20Safety:%20Stay%20within%20Ramkund%20safety%20chains.%20Never%20jump%20from%20bridges!%20Safe%20Nashik%20Portal" target="_blank" rel="noopener" class="btn-micro" style="background:#25D366; color:#fff;">
+                <i class="fab fa-whatsapp"></i> Share
+              </a>
+            </div>
+          </article>
+
+          <!-- 3. Home & Child Proofing -->
+          <article class="safety-card" id="topicHome">
+            <div class="safety-card-header">
+              <div class="card-topic-icon home"><i class="fas fa-house-chimney-medical"></i></div>
+              <div class="card-topic-titles">
+                <h3>Home & Child Safety</h3>
+                <span>Gas leaks, Falls & Electric Shock</span>
+              </div>
+            </div>
+            <div class="safety-card-body">
+              <p>Prevent preventable household mishaps with childproofing and systematic gas cylinder checks.</p>
+              <ul class="safety-list">
+                <li><strong>LPG Soap-Bubble Test:</strong> Apply soapy sponge over regulator joints. Expanding bubbles indicate leak.</li>
+                <li><strong>No Electrical Sparks:</strong> If gas smell occurs, open windows immediately. Do NOT touch any switches.</li>
+                <li><strong>Balcony & Window Grills:</strong> Vertical grill spacing must be under 4 inches to prevent toddler falls.</li>
+                <li><strong>Anti-Skid Bathrooms:</strong> Install grab rails for senior citizens to prevent hip fractures.</li>
+              </ul>
+            </div>
+            <div class="safety-card-footer">
+              <button type="button" class="btn-read-aloud" data-target="#topicHome" title="Listen to Home Safety Tips">
+                <i class="fas fa-volume-high"></i> Listen Aloud
+              </button>
+              <a href="#idCardGenerator" class="btn-micro"><i class="fas fa-id-card"></i> Make Child ID</a>
+            </div>
+          </article>
+
+          <!-- 4. Fire Defense & Workplace -->
+          <article class="safety-card" id="topicFire">
+            <div class="safety-card-header">
+              <div class="card-topic-icon fire"><i class="fas fa-fire-flame-curved"></i></div>
+              <div class="card-topic-titles">
+                <h3>Fire Defense & Workplace</h3>
+                <span>Ambad & Satpur MIDC & Markets</span>
+              </div>
+            </div>
+            <div class="safety-card-body">
+              <p>Commercial shops and industrial plants must adhere to fire zoning and electrical audits.</p>
+              <ul class="safety-list">
+                <li><strong>Remember P.A.S.S.:</strong> Pull pin, Aim at base of fire, Squeeze handle, Sweep side-to-side.</li>
+                <li><strong>Industrial PPE:</strong> Steel-toe boots, safety goggles, and helmets inside MIDC Ambad/Satpur units.</li>
+                <li><strong>Farm Machinery:</strong> Keep loose dupattas and clothing away from tractor PTO shafts and threshers.</li>
+                <li><strong>Clear Corridors:</strong> Never block fire exit doors with carton boxes or inventory.</li>
+              </ul>
+            </div>
+            <div class="safety-card-footer">
+              <button type="button" class="btn-read-aloud" data-target="#topicFire" title="Listen to Fire Safety Tips">
+                <i class="fas fa-volume-high"></i> Listen Aloud
+              </button>
+              <a href="tel:101" class="btn-micro call"><i class="fas fa-phone-alt"></i> Fire 101</a>
+            </div>
+          </article>
+
+          <!-- 5. First Aid & Emergency CPR -->
+          <article class="safety-card" id="topicFirstAid">
+            <div class="safety-card-header">
+              <div class="card-topic-icon firstaid"><i class="fas fa-hand-holding-medical"></i></div>
+              <div class="card-topic-titles">
+                <h3>First Aid & CPR Basics</h3>
+                <span>Golden Hour Response Protocols</span>
+              </div>
+            </div>
+            <div class="safety-card-body">
+              <p>Immediate bystander CPR within 4 minutes can double or triple survival rates during cardiac arrest.</p>
+              <ul class="safety-list">
+                <li><strong>CPR Mechanics:</strong> Place hands center of chest. Push hard and fast (100–120 bpm, rhythm of 'Stayin Alive').</li>
+                <li><strong>Arterial Bleeding:</strong> Firm, continuous direct pressure with clean cloth. Elevate injured limb.</li>
+                <li><strong>Burn Care:</strong> Cool with gentle running tap water for 15 minutes. Never apply toothpaste or ghee!</li>
+                <li><strong>Choking Relief:</strong> Stand behind victim, perform inward & upward abdominal thrusts (Heimlich).</li>
+              </ul>
+            </div>
+            <div class="safety-card-footer">
+              <button type="button" class="btn-read-aloud" data-target="#topicFirstAid" title="Listen to First Aid Tips">
+                <i class="fas fa-volume-high"></i> Listen Aloud
+              </button>
+              <a href="tel:108" class="btn-micro call"><i class="fas fa-phone-alt"></i> Call 108</a>
+            </div>
+          </article>
+
+          <!-- 6. Monsoon & Natural Hazards -->
+          <article class="safety-card" id="topicMonsoon">
+            <div class="safety-card-header">
+              <div class="card-topic-icon work"><i class="fas fa-cloud-bolt"></i></div>
+              <div class="card-topic-titles">
+                <h3>Monsoon & Weather Hazards</h3>
+                <span>Flood Siren, Lightning & Heatstroke</span>
+              </div>
+            </div>
+            <div class="safety-card-body">
+              <p>Nashik's geography makes it prone to rapid Godavari flood surges and highway fog along Kasara Ghat.</p>
+              <ul class="safety-list">
+                <li><strong>Flood Siren Alert:</strong> Move immediately to higher elevation when sirens sound along Panchavati ghats.</li>
+                <li><strong>Lightning 30-30 Rule:</strong> If time between lightning flash and thunder is under 30 seconds, seek indoor shelter.</li>
+                <li><strong>Flooded Roads:</strong> Never attempt to drive two-wheelers through moving water; 6 inches can knock you over.</li>
+                <li><strong>Summer Heatstroke:</strong> Drink lemon water, carry umbrellas, and recognize confusion as a heat stroke sign.</li>
+              </ul>
+            </div>
+            <div class="safety-card-footer">
+              <button type="button" class="btn-read-aloud" data-target="#topicMonsoon" title="Listen to Weather Safety Tips">
+                <i class="fas fa-volume-high"></i> Listen Aloud
+              </button>
+              <a href="tel:02532227100" class="btn-micro"><i class="fas fa-cloud-showers-heavy"></i> Flood Cell</a>
+            </div>
+          </article>
+        </div>
+
+        <!-- ====================================================================
+             Comprehensive Road Rules & Traffic Regulations (Including New Amendments)
+             ==================================================================== -->
+        <div class="road-rules-hub" id="roadRulesSection">
+          <div class="road-rules-header">
+            <div class="road-rules-title-group">
+              <span class="badge-pill pill-live" style="background:rgba(225,29,72,0.12); color:var(--danger); border-color:rgba(225,29,72,0.3); font-size:0.75rem;">
+                <i class="fas fa-shield-halved"></i> UPDATED MOTOR VEHICLES ACT & NASHIK TRAFFIC POLICE REGULATIONS
+              </span>
+              <h3 class="rules-hub-headline">Comprehensive Road Rules, Traffic Laws & New Penalties</h3>
+              <p class="rules-hub-desc">
+                Complete guide to traffic regulations in Nashik City, state highways (NH-3, NH-848), and Samruddhi Mahamarg. Includes new 2024–2026 legal amendments, strict automated e-challan camera rules, and Good Samaritan legal protections.
+              </p>
+            </div>
+            
+            <div class="rules-stats-ribbon">
+              <div class="rule-stat-item">
+                <i class="fas fa-video"></i>
+                <div>
+                  <strong>50+ AI Cameras</strong>
+                  <span>Active at Nashik Signals</span>
+                </div>
+              </div>
+              <div class="rule-stat-item">
+                <i class="fas fa-gavel"></i>
+                <div>
+                  <strong>₹25,000 Max Fine</strong>
+                  <span>New Minor Driving Law</span>
+                </div>
+              </div>
+              <div class="rule-stat-item">
+                <i class="fas fa-clock"></i>
+                <div>
+                  <strong>Golden Hour</strong>
+                  <span>Cash Reward & Immunity</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls: Category Filter Tabs & Instant Search -->
+          <div class="road-rules-toolbar">
+            <div class="rules-search-wrap">
+              <i class="fas fa-magnifying-glass"></i>
+              <input type="text" id="rulesSearchInput" placeholder="Search by rule, law section, or fine (e.g., Minor, Alcohol, Helmet, 10000, Seatbelt, Kasara)..." aria-label="Search Road Rules">
+            </div>
+
+            <div class="rules-category-tabs" id="rulesCategoryTabs">
+              <button type="button" class="rule-tab-btn active" data-category="all">All Rules (14)</button>
+              <button type="button" class="rule-tab-btn" data-category="new">⚡ New 2024–2026 Rules</button>
+              <button type="button" class="rule-tab-btn" data-category="twowheeler">🛵 Two-Wheeler Mandates</button>
+              <button type="button" class="rule-tab-btn" data-category="fourwheeler">🚗 Car & Highway Rules</button>
+              <button type="button" class="rule-tab-btn" data-category="signals">🛑 Signals & Right-of-Way</button>
+              <button type="button" class="rule-tab-btn" data-category="samaritan">🤝 Good Samaritan Rights</button>
+            </div>
+          </div>
+
+          <!-- Grid of Road Rule Cards -->
+          <div class="road-rules-grid" id="roadRulesGrid">
+            
+            <!-- Rule 1: Minor Driving (NEW) -->
+            <div class="road-rule-card" data-category="new" data-search="minor underage driving parents jail 25000 199a registration cancelled student college">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-danger">⚡ NEW AMENDMENT</span>
+                <span class="rule-section-tag">Section 199A MV Act</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-child"></i> Minor & Underage Driving Ban</h4>
+              <div class="rule-penalty-badge penalty-severe">
+                <i class="fas fa-triangle-exclamation"></i> ₹25,000 Fine + 3 Yrs Jail for Parents + RC Cancelled for 1 Yr
+              </div>
+              <p class="rule-desc">
+                Parents or vehicle guardians are held directly accountable if a minor (under 18) operates a motor vehicle. The vehicle’s registration is cancelled for 12 months, and the minor is legally barred from obtaining a driving license until turning 25 years old.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-location-dot"></i> <strong>Nashik Police Action:</strong> Strict checkpoints near Nashik colleges (Gangapur Road, Canada Corner, College Road & Panchavati).
+              </div>
+            </div>
+
+            <!-- Rule 2: Emergency Vehicle Obstruction (NEW) -->
+            <div class="road-rule-card" data-category="new signals" data-search="ambulance fire brigade emergency siren 10000 194e hospital civil right of way yield">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-danger">⚡ NEW MANDATE</span>
+                <span class="rule-section-tag">Section 194E MV Act</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-truck-medical"></i> Blocking Emergency Vehicles (Ambulance/Fire)</h4>
+              <div class="rule-penalty-badge penalty-severe">
+                <i class="fas fa-triangle-exclamation"></i> ₹10,000 Fine and/or Up to 6 Months Imprisonment
+              </div>
+              <p class="rule-desc">
+                All motorists must immediately steer to the left side of the road to clear a free corridor whenever an ambulance (108) or fire engine (101) approaches with active sirens or flashers. Tailgating behind an ambulance to beat traffic is strictly punishable.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-location-dot"></i> <strong>Nashik Police Action:</strong> AI camera monitoring along Dwarka to Civil Hospital trauma corridor.
+              </div>
+            </div>
+
+            <!-- Rule 3: Drunk Driving -->
+            <div class="road-rule-card" data-category="new fourwheeler twowheeler" data-search="drunk driving alcohol liquor breathalyzer 185 blood test 10000 15000 jail impound">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-warning">CRITICAL OFFENCE</span>
+                <span class="rule-section-tag">Section 185 MV Act</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-wine-bottle"></i> Drunk Driving & Intoxication (DUI)</h4>
+              <div class="rule-penalty-badge penalty-severe">
+                <i class="fas fa-triangle-exclamation"></i> 1st Offence: ₹10,000 / 6M Jail &bull; Repeat: ₹15,000 / 2 Yrs Jail
+              </div>
+              <p class="rule-desc">
+                Legal threshold is 30 mg alcohol per 100 ml blood. Traffic police conduct breathalyzer alcohol testing. In addition to fines and jail terms, the driving license is suspended for a minimum of 6 months. Vehicles cannot be driven away and will be impounded on the spot.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-location-dot"></i> <strong>Nashik Police Action:</strong> Night blockades across Mumbai Naka, Trimbak Road, and Gangapur Road restaurant stretches.
+              </div>
+            </div>
+
+            <!-- Rule 4: Mobile Phone Usage (NEW) -->
+            <div class="road-rule-card" data-category="new twowheeler fourwheeler" data-search="mobile phone texting calling driving handsfree navigation 184c 5000 headphone earbuds">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-danger">⚡ NEW GUIDELINE</span>
+                <span class="rule-section-tag">Section 184(c) MV Act</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-mobile-screen-button"></i> Mobile Phone & Earphones Usage While Driving</h4>
+              <div class="rule-penalty-badge penalty-high">
+                <i class="fas fa-circle-exclamation"></i> ₹1,000 to ₹5,000 Fine + Demerit License Points
+              </div>
+              <p class="rule-desc">
+                Holding, scrolling, or talking on a mobile phone (or wearing Bluetooth earbuds/headphones) while operating a vehicle or halted at red signals is illegal. GPS route navigation is permitted ONLY if the phone is firmly docked on a dashboard mount before departure.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-triangle-exclamation"></i> <strong>Safety Reality:</strong> Looking down at a phone for 3 seconds at 60 km/h means driving 50 meters blind.
+              </div>
+            </div>
+
+            <!-- Rule 5: Helmet Rule (Rider + Pillion) -->
+            <div class="road-rule-card" data-category="twowheeler" data-search="helmet isi mark chin strap pillion rider two wheeler bike motorcycle 194d 1000 license 3 months">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-primary">TWO-WHEELER MANDATE</span>
+                <span class="rule-section-tag">Section 194D MV Act</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-helmet-safety"></i> Mandatory ISI Helmets for Rider AND Pillion</h4>
+              <div class="rule-penalty-badge penalty-high">
+                <i class="fas fa-circle-exclamation"></i> ₹1,000 Fine + 3-Month License Disqualification
+              </div>
+              <p class="rule-desc">
+                Both the rider and the pillion passenger must wear BIS/ISI certified helmets with chin straps firmly clipped. Non-standard industrial construction helmets, half-cap novelty lids, or unbuckled straps are deemed helmet-less and penalized.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-shield-halved"></i> <strong>Medical Fact:</strong> Proper full-face helmets reduce head trauma and brain death risk by 72% in two-wheeler crashes.
+              </div>
+            </div>
+
+            <!-- Rule 6: All-Occupant Seatbelts (NEW) -->
+            <div class="road-rule-card" data-category="new fourwheeler" data-search="seatbelt rear seat passenger highway expressway samruddhi 194b 1000 car airbag">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-danger">⚡ NEW ENFORCEMENT</span>
+                <span class="rule-section-tag">Section 194B MV Act</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-user-shield"></i> Mandatory Seatbelts for All (Front & Rear Seats)</h4>
+              <div class="rule-penalty-badge penalty-moderate">
+                <i class="fas fa-circle-exclamation"></i> ₹1,000 Fine per Unbelted Occupant
+              </div>
+              <p class="rule-desc">
+                Driver and all front/rear passengers in four-wheelers must wear seatbelts. Unbelted rear occupants become human projectiles during collisions at high highway speeds, crushing front passengers and launching through the windshield.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-location-dot"></i> <strong>Nashik Police Action:</strong> Checked strictly at Pimpalgaon, Gonde, and Kasara Toll Plazas.
+              </div>
+            </div>
+
+            <!-- Rule 7: Over-Speeding & Dangerous Racing -->
+            <div class="road-rule-card" data-category="fourwheeler twowheeler" data-search="speeding overspeed speed radar limit nh3 flyover 183 184 2000 4000 racing stunt">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-warning">SPEED ENFORCEMENT</span>
+                <span class="rule-section-tag">Section 183 & 184 MV Act</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-gauge-high"></i> Over-Speeding & Dangerous Racing</h4>
+              <div class="rule-penalty-badge penalty-high">
+                <i class="fas fa-circle-exclamation"></i> ₹1,000–₹2,000 (Cars) &bull; ₹2,000–₹4,000 (Commercial/Heavy) + DL Seizure
+              </div>
+              <p class="rule-desc">
+                Exceeding posted speed limits (Nashik Flyover: 60 km/h, City Artery: 40 km/h, NH-3: 80 km/h). Stunt riding, wheelies, aggressive lane swerving, and street racing carry an additional ₹5,000 fine and criminal vehicle seizure.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-camera"></i> <strong>Automated Radar:</strong> Speed interceptor vans actively scan Mumbai-Agra Highway and Trimbak Road.
+              </div>
+            </div>
+
+            <!-- Rule 8: Red Light Jumping & Stop Line -->
+            <div class="road-rule-card" data-category="signals" data-search="red light signal jumping stop line zebra crossing camera rlvd e challan 184 177 5000">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-primary">SIGNAL DISCIPLINE</span>
+                <span class="rule-section-tag">Section 184 / 177 MV Act</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-traffic-light"></i> Red Light Jumping & Stop Line Infraction</h4>
+              <div class="rule-penalty-badge penalty-high">
+                <i class="fas fa-circle-exclamation"></i> ₹1,000 to ₹5,000 Automated E-Challan
+              </div>
+              <p class="rule-desc">
+                Crossing the white stop line or driving through an amber/red traffic light is captured automatically by RLVD (Red Light Violation Detection) high-definition cameras. Vehicles must stop completely behind the marked line so pedestrian crosswalks remain accessible.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-location-dot"></i> <strong>Nashik AI Intersections:</strong> Active at CBS, Mumbai Naka, Untwadi, and Jehan Circle.
+              </div>
+            </div>
+
+            <!-- Rule 9: Samruddhi Expressway Lane Rules (NEW) -->
+            <div class="road-rule-card" data-category="new fourwheeler" data-search="samruddhi mahamarg expressway lane driving overtaking lane right shoulder nitrogen tyre burst 120">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-danger">⚡ EXPRESSWAY CODE</span>
+                <span class="rule-section-tag">Maharashtra Expressways Reg.</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-road"></i> Samruddhi Mahamarg Lane Discipline & Tyre Mandate</h4>
+              <div class="rule-penalty-badge penalty-moderate">
+                <i class="fas fa-circle-exclamation"></i> ₹1,000 to ₹2,000 for Lane Cutting / Shoulder Parking
+              </div>
+              <p class="rule-desc">
+                Speed limits: 120 km/h (Cars), 80 km/h (Trucks/Buses). The right-most lane (Lane 1) is STRICTLY for overtaking; lingering in Lane 1 is illegal. Stopping on emergency shoulders is prohibited unless mechanically broken down. Pre-entry tyre pressure check is mandatory to prevent friction bursts.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-wrench"></i> <strong>Survival Tip:</strong> 38% of Samruddhi fatal accidents are caused by tyre blowout due to under-inflation.
+              </div>
+            </div>
+
+            <!-- Rule 10: Modified Exhausts & Noise Pollution -->
+            <div class="road-rule-card" data-category="new twowheeler" data-search="silencer exhaust bullet modified loud cracker noise sound decibel 190 2 10000 pollution">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-warning">NOISE POLLUTION</span>
+                <span class="rule-section-tag">Section 190(2) MV Act</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-volume-xmark"></i> Modified Silencers & Loud Aftermarket Exhausts</h4>
+              <div class="rule-penalty-badge penalty-severe">
+                <i class="fas fa-triangle-exclamation"></i> ₹10,000 Fine + Silencer Confiscation & Road Roller Crushing
+              </div>
+              <p class="rule-desc">
+                Installing free-flow aftermarket exhausts, silencer decat pipes, or firing cracker sound devices on motorcycles (especially Royal Enfield bullets) is strictly illegal. Exhausts exceeding 80 dB noise limits are detached on the spot by traffic inspectors.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-gavel"></i> <strong>Nashik Police Action:</strong> Zero-tolerance drives near residential colonies and hospital silence zones.
+              </div>
+            </div>
+
+            <!-- Rule 11: City High-Beam Headlight Ban (NEW) -->
+            <div class="road-rule-card" data-category="new fourwheeler twowheeler" data-search="high beam light headlight glare blind night city illumination 177 1500 led">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-primary">NIGHT ROAD PROTOCOL</span>
+                <span class="rule-section-tag">Section 177 MV Act</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-sun"></i> High-Beam Headlight Ban on City Illuminated Roads</h4>
+              <div class="rule-penalty-badge penalty-moderate">
+                <i class="fas fa-circle-exclamation"></i> ₹500 to ₹1,500 Fine for Glare Blindness
+              </div>
+              <p class="rule-desc">
+                High-beam headlights produce acute retinal blinding for oncoming drivers and pedestrians. Drivers must switch to low-beam lights on all municipal roads that have street lighting. High beams are allowed solely on unlit rural highways when no oncoming traffic is in sight.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-eye-slash"></i> <strong>Scientific Fact:</strong> High beam flash causes 3 to 5 seconds of night blindness, travelling 60 meters blind at 50 km/h.
+              </div>
+            </div>
+
+            <!-- Rule 12: Pedestrian Priority at Zebra Crossings -->
+            <div class="road-rule-card" data-category="signals" data-search="pedestrian zebra crossing walk school cross priority right of way 177 1000">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-primary">CIVIC RIGHT OF WAY</span>
+                <span class="rule-section-tag">Section 177 & Motor Rules</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-person-walking"></i> Absolute Pedestrian Priority at Zebra Crossings</h4>
+              <div class="rule-penalty-badge penalty-moderate">
+                <i class="fas fa-circle-exclamation"></i> ₹1,000 Fine for Failure to Yield
+              </div>
+              <p class="rule-desc">
+                Pedestrians have first right-of-way on all marked zebra crossings. When a pedestrian steps onto a crossing, approaching vehicles must slow down and come to a complete halt before the zebra line. Honking aggressively at crossing seniors or children is an offence.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-school"></i> <strong>Nashik School Zones:</strong> Enforced at Shalimar, CBS, College Road, and Ashok Stambh.
+              </div>
+            </div>
+
+            <!-- Rule 13: Triple Riding & Overloading -->
+            <div class="road-rule-card" data-category="twowheeler" data-search="triple seat riding overloading passengers two wheeler bike balance 194c 1000 3 months">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-warning">WEIGHT BALANCE</span>
+                <span class="rule-section-tag">Section 194C MV Act</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-users-slash"></i> Ban on Triple Riding on Two-Wheelers</h4>
+              <div class="rule-penalty-badge penalty-high">
+                <i class="fas fa-circle-exclamation"></i> ₹1,000 Fine + 3-Month License Suspension
+              </div>
+              <p class="rule-desc">
+                Carrying more than two people on a motorcycle or scooter destabilizes vehicle balance, shifts center of gravity, and increases braking distance by more than 40%. Triple riding also prevents either passenger from escaping clean during sudden skid falls.
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-triangle-exclamation"></i> <strong>Risk Alert:</strong> Responsible for over 22% of fatal young rider skids on Nashik outskirts.
+              </div>
+            </div>
+
+            <!-- Rule 14: Good Samaritan Legal Protection Law -->
+            <div class="road-rule-card card-samaritan-highlight" data-category="samaritan" data-search="good samaritan law protection police harassment reward 5000 hospital golden hour witness morth">
+              <div class="rule-card-top">
+                <span class="rule-cat-pill pill-success">CITIZEN LEGAL PROTECTION</span>
+                <span class="rule-section-tag">MoRTH & Supreme Court Order</span>
+              </div>
+              <h4 class="rule-name"><i class="fas fa-hand-holding-heart"></i> Good Samaritan Law & Golden Hour Reward</h4>
+              <div class="rule-penalty-badge penalty-reward">
+                <i class="fas fa-award"></i> Complete Legal Immunity + ₹5,000 Central Cash Reward
+              </div>
+              <p class="rule-desc">
+                Any citizen helping an injured road accident victim to hospital is protected by Supreme Court guidelines. Police cannot force you to disclose name or become a witness. Hospitals cannot refuse admission or demand payment. The 'Rah-Veer' scheme awards ₹5,000 for Golden Hour rescue!
+              </p>
+              <div class="rule-local-note">
+                <i class="fas fa-phone"></i> <strong>Helpline:</strong> In case of any harassment, call Nashik Police Control Room at 112 directly.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Road Rules CTA Banner -->
+          <div class="rules-footer-banner">
+            <div class="rules-banner-text">
+              <i class="fas fa-book-bookmark"></i>
+              <div>
+                <strong>Test Your Knowledge on These Rules</strong>
+                <span>Take our 5-question Safety Quiz to get an official digital certificate verifying your traffic awareness.</span>
+              </div>
+            </div>
+            <a href="#safetyQuiz" class="btn btn-primary" style="white-space:nowrap;">
+              <i class="fas fa-graduation-cap"></i> Take Safety Quiz
+            </a>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             Interactive Speed & Stopping Distance Simulator
+             ==================================================================== -->
+        <div class="speed-calc-card" id="speedCalculator">
+          <div class="speed-calc-header">
+            <div>
+              <h3><i class="fas fa-gauge-high text-danger"></i> Interactive Speed & Stopping Distance Calculator</h3>
+              <p class="text-muted">Simulate vehicle physics: See how reaction delay + braking friction determine your survival distance.</p>
+            </div>
+            <div>
+              <label for="roadCondition" style="font-weight:600; font-size:0.9rem; margin-right:0.5rem;">Road Surface:</label>
+              <select id="roadCondition" class="form-control" style="display:inline-block; width:auto;">
+                <option value="dry">Dry Asphalt (Summer / Clear)</option>
+                <option value="wet">Wet Monsoon Asphalt (Nashik Rains)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="speed-slider-wrap">
+            <div class="speed-slider-label">
+              <span>Driving Speed:</span>
+              <span><strong id="speedDisplay" style="font-size:1.4rem; color:var(--primary);">50</strong> km/h</span>
+            </div>
+            <input type="range" min="10" max="120" value="50" step="5" class="custom-range" id="speedSlider" aria-label="Vehicle speed slider">
+          </div>
+
+          <div class="stopping-bar-visual">
+            <div class="bar-reaction" id="barReaction" style="width: 20%;" title="Reaction distance"></div>
+            <div class="bar-braking" id="barBraking" style="width: 35%;" title="Braking distance"></div>
+          </div>
+
+          <div class="stopping-metrics-grid">
+            <div class="metric-box">
+              <h6>Reaction Distance (1.0s thinking lag)</h6>
+              <div class="metric-val" id="reactionDist">14 m</div>
+            </div>
+            <div class="metric-box">
+              <h6>Mechanical Braking Distance</h6>
+              <div class="metric-val" id="brakingDist">14 m</div>
+            </div>
+            <div class="metric-box total">
+              <h6>Total Stopping Distance</h6>
+              <div class="metric-val" id="totalStoppingDist">28 m</div>
+            </div>
+          </div>
+
+          <div class="calc-verdict-box" id="speedVerdict">
+            <!-- Dynamically populated via recalculate() -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Interactive Nashik Safety Map & Blackspots
+         ====================================================================== -->
+    <section class="section-wrapper" id="interactiveMap" style="background:var(--bg-card-subtle);">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag" data-i18n="mapSectionHeading">Live Nashik Safety GIS Map</span>
+          <h2 class="section-title">Critical Facilities & High-Risk Blackspots</h2>
+          <p class="section-subtitle" data-i18n="mapSectionSubtitle">Accident black spots, round-the-clock trauma hospitals, fire stations, and river rescue points across Nashik city.</p>
+        </div>
+
+        <div class="map-controls-row">
+          <div class="map-filter-group" role="tablist">
+            <button type="button" class="map-filter-btn active" data-category="all" data-i18n="btnFilterAll">
+              <i class="fas fa-layer-group"></i> All Points
+            </button>
+            <button type="button" class="map-filter-btn" data-category="hospital" data-i18n="btnFilterHospitals">
+              <i class="fas fa-hospital"></i> Hospitals & Trauma
+            </button>
+            <button type="button" class="map-filter-btn" data-category="blackspot" data-i18n="btnFilterBlackspots">
+              <i class="fas fa-triangle-exclamation"></i> Blackspots
+            </button>
+            <button type="button" class="map-filter-btn" data-category="construction" data-i18n="btnFilterConstruction">
+              <i class="fas fa-person-digging"></i> Under Construction
+            </button>
+            <button type="button" class="map-filter-btn" data-category="police" data-i18n="btnFilterPolice">
+              <i class="fas fa-building-shield"></i> Police Stations
+            </button>
+            <button type="button" class="map-filter-btn" data-category="fire" data-i18n="btnFilterFire">
+              <i class="fas fa-fire-extinguisher"></i> Fire Stations
+            </button>
+            <button type="button" class="map-filter-btn" data-category="ghat" data-i18n="btnFilterGhats">
+              <i class="fas fa-water"></i> Godavari Ghats
+            </button>
+            <button type="button" class="map-filter-btn" data-category="kumbh" data-i18n="btnFilterKumbh">
+              <i class="fas fa-om"></i> Kumbh 2027 Zones
+            </button>
+          </div>
+
+          <div class="map-search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="mapSearchInput" class="map-search-input" placeholder="Search hospital, blackspot, ghat..." data-i18n-placeholder="searchPlaceholder">
+          </div>
+        </div>
+
+        <div class="map-layout-grid">
+          <div class="map-canvas-container">
+            <div id="nashikMap">
+              <!-- Leaflet Map Mount or SVG Fallback Mount -->
+            </div>
+          </div>
+          <div class="map-sidebar-list" id="mapLocationsList">
+            <!-- Populated dynamically via map.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Report a Public Hazard in Nashik (Crowdsourcing)
+         ====================================================================== -->
+    <section class="section-wrapper" id="hazardReporting">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag" data-i18n="hazardHeading">Report a Public Hazard in Nashik</span>
+          <h2 class="section-title">Empowering Citizens to Prevent Accidents</h2>
+          <p class="section-subtitle" data-i18n="hazardSubtitle">Spot an open manhole, damaged barricade, waterlogged highway point, or broken traffic light? Report directly to community response.</p>
+        </div>
+
+        <div class="hazard-reporting-grid">
+          <!-- Submission Form -->
+          <div class="hazard-form-card">
+            <form id="hazardReportForm">
+              <div class="form-group">
+                <label for="hazardTypeSelect" data-i18n="labelHazardType">Hazard Category</label>
+                <select id="hazardTypeSelect" class="form-control" required>
+                  <option value="Road Pothole / Crater">Road Pothole / Deep Crater</option>
+                  <option value="Broken Barricade / Missing Railing">Broken Barricade / Missing Safety Railing</option>
+                  <option value="Open Manhole / Uncovered Drain">Open Manhole / Uncovered Drain</option>
+                  <option value="Traffic Light / Streetlight Failure">Traffic Signal / Streetlight Failure</option>
+                  <option value="Severe Waterlogging on Road">Severe Waterlogging / Road Submersion</option>
+                  <option value="Dangling Electric Cable / Short Circuit">Dangling Electric Wire / Sparking Pole</option>
+                  <option value="Missing River Ghat Warning Sign">Missing Ghat Safety Sign / Broken Lifebuoy</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="hazardLocationInput" data-i18n="labelHazardLocation">Specific Location / Landmark</label>
+                <div class="input-with-action">
+                  <input type="text" id="hazardLocationInput" class="form-control" placeholder="e.g. Under Dwarka Flyover near service road" required>
+                  <button type="button" class="btn-input-action" id="btnAutoGps" data-i18n="btnGetGPS">
+                    <i class="fas fa-location-arrow"></i> Auto GPS
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="hazardDescInput" data-i18n="labelHazardDesc">Description & Urgency</label>
+                <textarea id="hazardDescInput" class="form-control" rows="3" placeholder="Describe the hazard and potential danger to pedestrians or vehicles..." required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label data-i18n="labelHazardPhoto">Attach Photo / Evidence</label>
+                <div class="photo-upload-zone" onclick="document.getElementById('hazardPhotoInput').click()">
+                  <i class="fas fa-camera text-primary" style="font-size:1.8rem; margin-bottom:0.5rem; display:block;"></i>
+                  <span>Click to upload photo from your device</span>
+                  <input type="file" id="hazardPhotoInput" accept="image/*" style="display:none;">
+                </div>
+                <div id="photoPreviewContainer"></div>
+              </div>
+
+              <div class="form-group" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                <div>
+                  <label for="reporterNameInput" data-i18n="labelReporterName">Your Full Name</label>
+                  <input type="text" id="reporterNameInput" class="form-control" placeholder="Optional">
+                </div>
+                <div>
+                  <label for="reporterPhoneInput" data-i18n="labelReporterPhone">Phone Number</label>
+                  <input type="tel" id="reporterPhoneInput" class="form-control" placeholder="For SMS Ticket Updates">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="btnSubmitHazard">
+                <i class="fas fa-paper-plane"></i> Submit Hazard Report
+              </button>
+            </form>
+          </div>
+
+          <!-- Community Reports Feed -->
+          <div class="community-feed-wrapper">
+            <div class="community-feed-header">
+              <h4><i class="fas fa-clock-rotate-left"></i> Recent Community Hazard Reports</h4>
+              <span class="badge badge-primary">Live Tracking Feed</span>
+            </div>
+            <div class="community-reports-grid" id="communityReportsFeed">
+              <!-- Populated from localStorage and demo defaults via app.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Kumbh Mela 2027 Special Safety Module
+         ====================================================================== -->
+    <section class="kumbh-special-section" id="kumbhSpecial">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag" style="background:#fef3c7; color:#b45309;" data-i18n="kumbhHeading">Kumbh Mela 2027 Special Safety Module</span>
+          <h2 class="section-title">Pilgrim Crowd Management & Snan Safety</h2>
+          <p class="section-subtitle" data-i18n="kumbhSubtitle">Nashik-Trimbakeshwar pilgrim safety guidelines, crowd surge prevention, lost-and-found help, and sacred snan protocols.</p>
+        </div>
+
+        <div class="kumbh-banner-grid">
+          <div class="kumbh-img-wrap">
+            <img src="assets/images/kumbh-banner.jpg" alt="Nashik Kumbh Mela Pilgrim Safety & Crowd Management System">
+          </div>
+          <div class="kumbh-banner-info">
+            <span class="badge badge-kumbh mb-2"><i class="fas fa-bullseye"></i> Expected 2027 Maha-Parv</span>
+            <h3 style="font-size:1.8rem; margin-bottom:1rem; color:#78350f;">Zero Stampede, Zero Drowning Vision</h3>
+            <p style="margin-bottom:1rem; color:var(--text-muted);">
+              During peak Shahi Snan days, over 3 million pilgrims converge on Godavari ghats. Stampede survival mechanics and clear queue discipline are vital for family safety.
+            </p>
+            <div style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:1.5rem;">
+              <div style="display:flex; align-items:center; gap:0.75rem;">
+                <i class="fas fa-shield-cat text-primary" style="font-size:1.2rem;"></i>
+                <span><strong>The Boxer Arm Stance:</strong> In surging crowds, keep arms up near chest with elbows out to maintain your lung expansion space.</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:0.75rem;">
+                <i class="fas fa-arrows-split-up-and-left text-danger" style="font-size:1.2rem;"></i>
+                <span><strong>Move Diagonally:</strong> Never battle crowd momentum directly; glide sideways to reach safety edges.</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:0.75rem;">
+                <i class="fas fa-ban text-danger" style="font-size:1.2rem;"></i>
+                <span><strong>Never Bend Down:</strong> If you drop slippers or phones, do NOT bend down. Stay standing at all costs.</span>
+              </div>
+            </div>
+            <a href="#idCardGenerator" class="btn btn-secondary">
+              <i class="fas fa-id-badge"></i> Generate Free Pilgrim ID Band
+            </a>
+          </div>
+        </div>
+
+        <div class="kumbh-rules-grid">
+          <div class="kumbh-rule-card">
+            <h4><i class="fas fa-water"></i> Sacred Snan Protocols</h4>
+            <p>Do not spend more than 5 minutes at the water's edge during peak auspicious Muhurat to give space to following queues.</p>
+          </div>
+          <div class="kumbh-rule-card">
+            <h4><i class="fas fa-square-parking"></i> Outer Parking Hubs</h4>
+            <p>Private cars and buses will be parked strictly at outer satellite ring hubs. Mandatory free NMC electric shuttles to ghats.</p>
+          </div>
+          <div class="kumbh-rule-card">
+            <h4><i class="fas fa-children"></i> Child Safety ID Wristband</h4>
+            <p>Attach a water-resistant ID wristband with parent phone numbers to every child under 12 before entering crowded zones.</p>
+          </div>
+          <div class="kumbh-rule-card">
+            <h4><i class="fas fa-person-shelter"></i> Lost & Found Kiosks</h4>
+            <p>Centralized computerized missing persons desks stationed at CBS, Ramkund, Panchavati Karanja, and Railway Station.</p>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             Digital Child & Elderly Safety Wristband / ID Card Generator
+             ==================================================================== -->
+        <div class="id-generator-wrap" id="idCardGenerator" style="margin-top:3.5rem;">
+          <div class="section-head" style="margin-bottom:1.5rem;">
+            <h3><i class="fas fa-id-card-clip text-primary"></i> Digital Safety ID / Wristband Generator</h3>
+            <p class="text-muted">Create an instantly printable safety card for children, seniors, or pilgrims before visiting Nashik ghats or crowded festivals.</p>
+          </div>
+
+          <div class="id-generator-grid">
+            <div class="hazard-form-card">
+              <form id="idCardGeneratorForm">
+                <div class="form-group" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                  <div>
+                    <label for="idPersonName">Person's Full Name</label>
+                    <input type="text" id="idPersonName" class="form-control" placeholder="e.g. Aarav Patil" required>
+                  </div>
+                  <div>
+                    <label for="idPersonType">Category</label>
+                    <select id="idPersonType" class="form-control">
+                      <option value="Child">Child (Under 12)</option>
+                      <option value="Elderly">Elderly Citizen</option>
+                      <option value="Pilgrim">Kumbh Pilgrim / Visitor</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                  <div>
+                    <label for="idAge">Age (Years)</label>
+                    <input type="number" id="idAge" class="form-control" placeholder="e.g. 7" required>
+                  </div>
+                  <div>
+                    <label for="idBloodGroup">Blood Group</label>
+                    <select id="idBloodGroup" class="form-control">
+                      <option value="O+">O Positive (O+)</option>
+                      <option value="A+">A Positive (A+)</option>
+                      <option value="B+">B Positive (B+)</option>
+                      <option value="AB+">AB Positive (AB+)</option>
+                      <option value="O-">O Negative (O-)</option>
+                      <option value="A-">A Negative (A-)</option>
+                      <option value="B-">B Negative (B-)</option>
+                      <option value="AB-">AB Negative (AB-)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="idGuardianName">Guardian / Family Contact Person</label>
+                  <input type="text" id="idGuardianName" class="form-control" placeholder="Parent or Companion Name" required>
+                </div>
+
+                <div class="form-group" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                  <div>
+                    <label for="idPrimaryPhone">Primary Emergency Phone</label>
+                    <input type="tel" id="idPrimaryPhone" class="form-control" placeholder="10-digit Mobile" required>
+                  </div>
+                  <div>
+                    <label for="idEmergencyPhone">Alternate Police / Help Phone</label>
+                    <input type="tel" id="idEmergencyPhone" class="form-control" value="112" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="idCityAddress">Nashik Address / Camp / Hotel</label>
+                  <input type="text" id="idCityAddress" class="form-control" placeholder="e.g. Tapovan Camp #4 / Hotel Panchavati" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width:100%;">
+                  <i class="fas fa-qrcode"></i> Generate Safety ID Card
+                </button>
+              </form>
+            </div>
+
+            <div class="id-preview-col">
+              <div id="idCardRenderBox">
+                <!-- Sample Default Preview -->
+                <div class="printable-safety-card" id="printableCard">
+                  <div class="card-band">
+                    <div class="band-left">
+                      <strong>NASHIK PILGRIM & CITIZEN SAFETY WRISTBAND / ID</strong>
+                      <span>Kumbh Mela & Heavy Crowd Safety Protection Protocol</span>
+                    </div>
+                    <div class="band-right">
+                      <span class="id-serial">NSK-ID-DEMO</span>
+                    </div>
+                  </div>
+                  <div class="card-content-grid">
+                    <div class="card-photo-avatar">
+                      <div class="avatar-icon"><i class="fas fa-child"></i></div>
+                      <span class="type-tag">Child</span>
+                    </div>
+                    <div class="card-details-col">
+                      <h3 class="name-display">Sample Safety Card</h3>
+                      <p><strong>Age:</strong> 8 yrs &nbsp;|&nbsp; <strong>Blood Group:</strong> <span class="blood-badge">B+</span></p>
+                      <p><strong>Guardian Contact:</strong> Ramesh Patil (+91 98220 12345)</p>
+                      <p><strong>Alternate Contact:</strong> Police Helpdesk (112)</p>
+                      <p><strong>Nashik Lodging:</strong> Panchavati Ashram, Tapovan</p>
+                    </div>
+                    <div class="card-barcode-col">
+                      <div class="simulated-qr"><i class="fas fa-qrcode"></i></div>
+                      <span class="qr-text">Scan for SOS Help</span>
+                      <span class="sos-call-label">If Lost, Call: 112 / 108</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline mt-3" id="printIdCardBtn" style="margin-top:1rem; width:100%; display:none;">
+                <i class="fas fa-print"></i> Print / Save Safety ID Card (PDF)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Community Safety Quiz & Official Certificate Generator
+         ====================================================================== -->
+    <section class="section-wrapper" id="safetyQuiz">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag" data-i18n="quizHeading">Community Safety Challenge & Official Certificate</span>
+          <h2 class="section-title">Test Your Emergency Preparedness</h2>
+          <p class="section-subtitle" data-i18n="quizSubtitle">Test your accident prevention reflexes. Score 60% or higher to earn your downloadable Nashik Civic Safety Champion Certificate!</p>
+        </div>
+
+        <div class="quiz-container-card">
+          <!-- Quiz Intro State -->
+          <div id="quizIntroCard" class="text-center" style="padding:1.5rem 0;">
+            <div style="font-size:3.5rem; color:var(--accent-gold); margin-bottom:1rem;">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3 style="margin-bottom:0.75rem;">Are You Ready for Real-Life Emergencies?</h3>
+            <p style="color:var(--text-muted); max-width:550px; margin:0 auto 1.5rem;">
+              Take our 5-question multi-scenario challenge covering CPR, water rescue at Godavari ghats, fire extinguisher operation, and crowd safety.
+            </p>
+            <button type="button" class="btn btn-primary" id="startQuizBtn" data-i18n="btnStartQuiz">
+              <i class="fas fa-play"></i> Start Safety Quiz Now
+            </button>
+          </div>
+
+          <!-- Active Quiz Question State -->
+          <div id="quizActiveCard" style="display:none;">
+            <div class="d-flex justify-content-between align-items-center" style="display:flex; justify-content:space-between;">
+              <span style="font-weight:600; font-size:0.9rem;">Question Progress</span>
+              <span id="quizProgressNumber" style="font-weight:700; color:var(--primary);">1 / 5</span>
+            </div>
+            <div class="quiz-progress-bar-wrap">
+              <div class="quiz-progress-fill" id="quizProgressBar"></div>
+            </div>
+
+            <div id="quizQuestionContainer">
+              <!-- Dynamically populated from data.js -->
+            </div>
+
+            <div style="text-align:right; margin-top:1.5rem;">
+              <button type="button" class="btn btn-primary" id="nextQuestionBtn" style="display:none;">
+                <span>Next Question</span> <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quiz Completion & Certificate State -->
+          <div id="quizResultCard" style="display:none; text-align:center;">
+            <div style="font-size:3.5rem; color:var(--success); margin-bottom:0.5rem;">
+              <i class="fas fa-medal"></i>
+            </div>
+            <h3>Quiz Completed!</h3>
+            <p style="font-size:1.4rem; font-weight:700; margin:0.5rem 0;" id="quizFinalScore">4 / 5 (80%)</p>
+            <div id="quizResultMessage" style="margin-bottom:1.5rem;"></div>
+
+            <div id="certNameInputSection" style="max-width:480px; margin:0 auto 1.5rem; background:var(--bg-card-subtle); padding:1.5rem; border-radius:var(--radius-md);">
+              <label for="certCandidateName" style="display:block; font-weight:600; margin-bottom:0.5rem;">Enter Your Full Name for Certificate:</label>
+              <input type="text" id="certCandidateName" class="form-control" placeholder="e.g. Adv. Amit S. Joshi" style="margin-bottom:1rem;">
+              <button type="button" class="btn btn-primary" id="downloadCertBtn" data-i18n="btnDownloadCert" style="width:100%;">
+                <i class="fas fa-file-arrow-down"></i> Download Official Certificate (PNG)
+              </button>
+            </div>
+
+            <button type="button" class="btn btn-outline" id="restartQuizBtn">
+              <i class="fas fa-rotate-right"></i> Retake Quiz
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Community Safety Pledge
+         ====================================================================== -->
+    <section class="section-wrapper" id="communityPledge" style="padding-top:0;">
+      <div class="container">
+        <div class="pledge-banner-box">
+          <span class="badge badge-warning" style="font-size:0.85rem;"><i class="fas fa-heart"></i> CITIZEN EMPOWERMENT</span>
+          <h2 style="font-size:2.2rem; margin-top:0.5rem;" data-i18n="pledgeHeading">Take the Nashik Community Safety Pledge</h2>
+          <div class="pledge-counter-display" id="livePledgeCounter">1,482</div>
+          <p style="font-size:1rem; opacity:0.9;" data-i18n="pledgeSubtitle">Nashikkars who have solemnly sworn to protect lives on roads, river ghats, and during public congregations.</p>
+
+          <div class="pledge-commitments">
+            <p><i class="fas fa-check-circle"></i> I will wear a certified helmet on every two-wheeler ride and insist my pillion does too.</p>
+            <p><i class="fas fa-check-circle"></i> I will never jump into the Godavari beyond safety chains or swim in flood currents.</p>
+            <p><i class="fas fa-check-circle"></i> I will never operate a phone while driving or drink and drive.</p>
+            <p><i class="fas fa-check-circle"></i> I will fearlessly assist accident victims during the Golden Hour as a Good Samaritan.</p>
+          </div>
+
+          <button type="button" class="btn btn-primary" id="takePledgeBtn" style="background:#fbbf24; color:#0f172a; font-size:1.1rem; padding:0.85rem 2rem;" data-i18n="btnTakePledge">
+            <i class="fas fa-hand-fist"></i> I Solemnly Take the Safety Pledge
+          </button>
+
+          <div id="pledgeSuccessCard" style="display:none; margin-top:1.5rem; background:rgba(255,255,255,0.15); padding:1rem; border-radius:var(--radius-md);">
+            <p><i class="fas fa-certificate text-warning"></i> <strong>Congratulations!</strong> You are an official Nashik Community Safety Advocate. Share your commitment with friends on WhatsApp!</p>
+            <a href="https://api.whatsapp.com/send?text=🛡️%20I%20just%20took%20the%20Nashik%20Community%20Safety%20Pledge!%20Join%20me%20in%20making%20Nashik%20accident-free." target="_blank" rel="noopener" class="btn btn-micro mt-2" style="background:#25D366; color:#fff; display:inline-flex;">
+              <i class="fab fa-whatsapp"></i> Share My Pledge on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Awareness Campaign Gallery
+         ====================================================================== -->
+    <section class="section-wrapper" id="campaignGallery">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Community Action</span>
+          <h2 class="section-title">Awareness Drives & Rescue Demonstrations</h2>
+          <p class="section-subtitle">Real moments of civic training, traffic police helmet rallies, school CPR workshops, and river rescue mock-drills across Nashik.</p>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="assets/images/hero-banner.jpg" alt="Traffic Safety Rally Nashik">
+            <div class="gallery-overlay">
+              <span class="gallery-caption"><i class="fas fa-camera"></i> Police Mitra Helmet Awareness Campaign</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/images/kumbh-banner.jpg" alt="Godavari Ghat Rescue Mock Drill">
+            <div class="gallery-overlay">
+              <span class="gallery-caption"><i class="fas fa-camera"></i> Godavari River Rescue & Lifebuoy Mock Drill</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/images/hero-banner.jpg" alt="School CPR Training Drive">
+            <div class="gallery-overlay">
+              <span class="gallery-caption"><i class="fas fa-camera"></i> Hands-Only CPR Training for College NSS Students</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/images/kumbh-banner.jpg" alt="Kumbh Mela Volunteer Corps">
+            <div class="gallery-overlay">
+              <span class="gallery-caption"><i class="fas fa-camera"></i> Kumbh 2027 Crowd Warden Simulation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Volunteer Registration Form
+         ====================================================================== -->
+    <section class="section-wrapper" id="volunteerSection" style="background:var(--bg-card-subtle);">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag" data-i18n="volunteerHeading">Community Volunteers</span>
+          <h2 class="section-title">Join the Nashik Citizen Safety Corps</h2>
+          <p class="section-subtitle" data-i18n="volunteerSubtitle">Join NMC, Police Mitra, NSS/NCC units, and local youth corps for accident awareness drives and Kumbh 2027 assistance.</p>
+        </div>
+
+        <div class="hazard-form-card" style="max-width:700px; margin:0 auto;">
+          <form onsubmit="event.preventDefault(); alert('Thank you for registering as a Community Safety Volunteer! The Nashik Civil Defense Cell will contact you for orientation.'); this.reset();">
+            <div class="form-group" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+              <div>
+                <label>Full Name</label>
+                <input type="text" class="form-control" placeholder="Your Name" required>
+              </div>
+              <div>
+                <label>Age & College / Profession</label>
+                <input type="text" class="form-control" placeholder="e.g. 21, KTHM College" required>
+              </div>
+            </div>
+
+            <div class="form-group" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+              <div>
+                <label>Mobile Number (WhatsApp)</label>
+                <input type="tel" class="form-control" placeholder="10-digit number" required>
+              </div>
+              <div>
+                <label>Volunteer Role Preference</label>
+                <select class="form-control">
+                  <option>Road Safety & Blackspot Warden</option>
+                  <option>Godavari River Lifeguard / Watcher</option>
+                  <option>First Aid & Medical Camp Helper</option>
+                  <option>Kumbh Mela 2027 Crowd Guide</option>
+                  <option>Digital Awareness & Social Media</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Locality in Nashik</label>
+              <input type="text" class="form-control" placeholder="e.g. Panchavati / CIDCO / Nashik Road / Satpur" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="btnRegisterVolunteer">
+              <i class="fas fa-hand-holding-heart"></i> Register as Volunteer
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       SOS Emergency Modal & Alarm Synthesizer
+       ======================================================================== -->
+  <div class="safety-modal-backdrop" id="sosModal" style="display:none;">
+    <div class="safety-modal-card animate-scale-up" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <span class="popup-badge badge-danger"><i class="fas fa-triangle-exclamation"></i> EMERGENCY RESPONSE HUB</span>
+        <button type="button" class="modal-close-btn" id="closeSosModalBtn">&times;</button>
+      </div>
+      <h3 class="modal-title text-danger">Immediate Emergency Assistance</h3>
+      <p class="modal-address">Tap any service below to connect instantly. All emergency lines operate 24x7.</p>
+
+      <div class="sos-modal-grid">
+        <a href="tel:108" class="sos-action-tile">
+          <i class="fas fa-ambulance sos-tile-icon red"></i>
+          <strong>Call 108</strong>
+          <span>Ambulance & Trauma</span>
+        </a>
+
+        <a href="tel:112" class="sos-action-tile">
+          <i class="fas fa-shield-alt sos-tile-icon blue"></i>
+          <strong>Call 112</strong>
+          <span>Police & Rescue</span>
+        </a>
+
+        <a href="tel:101" class="sos-action-tile">
+          <i class="fas fa-fire-extinguisher sos-tile-icon orange"></i>
+          <strong>Call 101</strong>
+          <span>Fire Brigade</span>
+        </a>
+
+        <a href="tel:02532227100" class="sos-action-tile">
+          <i class="fas fa-water sos-tile-icon gold"></i>
+          <strong>Call Flood Cell</strong>
+          <span>0253-2227100</span>
+        </a>
+      </div>
+
+      <div style="background:var(--bg-card-subtle); padding:1rem; border-radius:var(--radius-md); margin-top:1rem; text-align:center;">
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">Need to alert bystanders or draw immediate attention around you?</p>
+        <button type="button" class="btn btn-danger" id="sirenTriggerBtn" style="width:100%;">
+          <i class="fas fa-bullhorn"></i> <span>Sound Civic Alarm</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       Site Footer
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <div class="site-brand" style="margin-bottom:1rem;">
+          <div class="brand-shield" style="width:36px; height:36px; font-size:1.1rem;">
+            <i class="fas fa-shield-heart"></i>
+          </div>
+          <div class="brand-text">
+            <h4 style="color:#fff;">सुरक्षित नाशिक | Safe Nashik</h4>
+            <span style="color:#94a3b8;">Civic Accident Prevention & Kumbh Safety</span>
+          </div>
+        </div>
+        <p style="font-size:0.88rem; line-height:1.6; margin-bottom:1rem;">
+          Dedicated to eliminating avoidable deaths on Nashik highways, Godavari ghats, and residential zones. Built in partnership with community volunteer corps and emergency services.
+        </p>
+        <div style="display:flex; gap:0.75rem; font-size:1.2rem;">
+          <a href="#" style="color:#94a3b8;"><i class="fab fa-twitter"></i></a>
+          <a href="#" style="color:#94a3b8;"><i class="fab fa-facebook"></i></a>
+          <a href="#" style="color:#94a3b8;"><i class="fab fa-youtube"></i></a>
+          <a href="#" style="color:#94a3b8;"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#safetyTopics">Safety Guides</a></li>
+          <li><a href="#interactiveMap">Safety Map</a></li>
+          <li><a href="#hazardReporting">Report a Hazard</a></li>
+          <li><a href="#kumbhSpecial">Kumbh 2027 Special</a></li>
+          <li><a href="#safetyQuiz">Quiz & Certificate</a></li>
+          <li><a href="/admin" style="color:var(--accent-gold); font-weight:600;"><i class="fas fa-lock"></i> Civic Command Center (Admin)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Official Authorities</h4>
+        <ul class="footer-links">
+          <li><a href="https://nashikcorporation.in" target="_blank" rel="noopener">Nashik Municipal Corp (NMC)</a></li>
+          <li><a href="https://nashikpolice.gov.in" target="_blank" rel="noopener">Nashik City Police</a></li>
+          <li><a href="https://nashik.gov.in" target="_blank" rel="noopener">District Collector Office</a></li>
+          <li><a href="tel:108">Maharashtra EMS (108)</a></li>
+          <li><a href="tel:112">National ERSS (112)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Academic Project Notice</h4>
+        <p style="font-size:0.85rem; color:#94a3b8; margin-bottom:0.75rem;">
+          Web Technology (WT) Mini Project on <strong>Accident Prevention and Community Awareness Website for Nashik & Kumbh Mela</strong>.
+        </p>
+        <div style="background:#1e293b; padding:0.6rem 0.85rem; border-radius:6px; font-size:0.8rem; border-left:3px solid var(--accent-gold);">
+          <span>Year-Round Civic Safety Initiative • Multilingual • Offline Ready • Mobile First</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p data-i18n="footerCopyright">© 2026 Safe Nashik Awareness Initiative. Built for Web Technology Civic Project. Endorsed for Nashik Community Safety & Kumbh 2027 Preparedness.</p>
+    </div>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Application Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
