@@ -149,6 +149,13 @@ function initSOSFeatures() {
     });
   }
 
+  const mobileSosModalBtn = document.getElementById("btnMobileSosModal");
+  if (mobileSosModalBtn && sosModal) {
+    mobileSosModalBtn.addEventListener("click", () => {
+      sosModal.classList.add("active");
+    });
+  }
+
   if (closeSosBtn && sosModal) {
     closeSosBtn.addEventListener("click", () => {
       sosModal.classList.remove("active");
