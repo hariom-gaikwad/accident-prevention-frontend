@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Safe Nashik Portal - Multilingual & Static Data Store
  * Contains location coordinates, translations (English, Marathi, Hindi),
  * quiz questions, safety rules, and announcements.
@@ -650,7 +650,7 @@ const NASHIK_DATA = {
   // Translation Strings dictionary
   translations: {
     en: {
-      siteTitle: "Safe Nashik | Accident Prevention & Community Safety Awareness",
+      siteTitle: "Safe Nashik",
       siteTagline: "A Citizen & Pilgrim Safety Initiative by Nashik Community",
       navHome: "Home",
       navTopics: "Safety Guides",
@@ -776,7 +776,7 @@ const NASHIK_DATA = {
       footerCopyright: "© २०२६ सुरक्षित नाशिक जनजागृती उपक्रम. वेब तंत्रज्ञान मिनी प्रोजेक्टसाठी विकसित. नाशिक समुदाय सुरक्षा व कुंभ २०२७ सज्जता."
     },
     hi: {
-      siteTitle: "सुरक्षित नासिक | दुर्घटना रोकथाम एवं जन-जागरूकता पोर्टल",
+      siteTitle: "सुरक्षित नासिक",
       siteTagline: "नासिकवासियों एवं तीर्थयात्रियों के लिए एक समर्पित नागरिक सुरक्षा पहल",
       navHome: "होम",
       navTopics: "सुरक्षा निर्देशिका",
